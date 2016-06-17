@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    </head>
+    <body>
+        <header class='main-header'>
+            <h1>TAM</h1>
+        </header>
+        <div class='interior'>
+            <header class='sub'>
+                Login
+            </header>
+
+            <form action="controllers/user/login.php" method='post'>
+                <?=$alert?>
+                <div class='form-group'>
+                    <label for='username'>Username: </label> <input type="text" id="username" class='form-control' name='username'>
+                </div>
+                <div class='form-group'>
+                    <label for='password'>Password: </label> <input type="password" id="password" class='form-control' name='password'>
+                </div>
+                <input type="submit" value="Submit" class='btn btn-default'> <br><br>
+                Don't have an account yet? <a href="views/user/new_user.php">Click Here</a>
+
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+header {
+    text-align: center;
+    border-bottom: 1px solid #DADADA;
+    width: 100%;
+    font-family: fantasy, sans-serif;
+    margin-bottom: 5%;
+}
+
+#page-organizer {
+    width: 1000px;
+    padding-left: 10px;
+}
+
+.sub {
+    position: relative;
+    width: 100%;
+    border-bottom: 0;
+    margin: 0px;
+    padding-top: 12px;
+    padding-bottom: 6px;
+    font-size: 24px;
+    margin-bottom: 15px;
+
+}
+
+.main-header {
+    position: absolute;
+    top: 50px;
+    left: -50%;
+    margin-left: 50%;
+}
+.interior {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 125px;
+    left: 50%;
+    margin-left: -25%;
+    padding: 10px;
+}
+
+.interior form {
+    position: relative;
+    left: 50%;
+    margin-left: -102px;
+    width: 205px;
+    text-align: center;
+    border: 1px solid #DDD;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px #AAA;
+}
