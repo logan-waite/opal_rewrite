@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -16,5 +17,8 @@ def sign_in(request):
             return HttpResponse("Hello, World")
         else:
             # Return a 'disabled account' error messages
-        gelse:
+            pass
+
+    else:
         # Return an 'invalid login' error message
+        return HttpResponse("Not a valid login")

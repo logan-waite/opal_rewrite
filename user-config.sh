@@ -22,4 +22,4 @@ echo workon opal_rewrite >> $HOME/.bashrc
 pip install -r /vagrant/requirements.txt
 
 # Set default directory to Django project folder
-echo cd /vagrant/tutorial/ >> $HOME/.bashrc
+echo cd /vagrant/opal/ >> $HOME/.bashrc
