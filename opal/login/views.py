@@ -17,8 +17,26 @@ def sign_in(request):
             return HttpResponse("Hello, World")
         else:
             # Return a 'disabled account' error messages
-            pass
+            return HttpResponse("User is not active")
 
     else:
         # Return an 'invalid login' error message
         return HttpResponse("Not a valid login")
+
+def new_user(request):
+    return render(request, 'login/new_user.html')
+
+def create_user(request):
+    first_name = request.POST['f_name']
+    last_name = request.POST['l_name']
+    username = request.POST['username']
+    password = request.POST['password']
+    email = request.POST['email']
+
+    new_user = User.objects.create_user(username, email, password)
+    new_user.first_name = first_name
+    new_user.last_name = last_name
+
+    new_user.save()
+
+    return HttpResponse("User created!")
