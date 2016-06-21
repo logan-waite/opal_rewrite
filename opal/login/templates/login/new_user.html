@@ -12,26 +12,26 @@
         {% csrf_token %}
         <div class='form-group'>
             <label for='f_name'>First Name: </label>
-            <input type="text" class="form-control" id="f_name" placeholder="First Name" name='f_name'>
+            <input type="text" class="form-control" id="f_name" placeholder="First Name" name='f_name' required>
         </div>
         <div class='form-group'>
             <label for='l_name'>Last Name: </label>
-            <input type="text" class="form-control" id="l_name" placeholder="Last Name" name='l_name'>
+            <input type="text" class="form-control" id="l_name" placeholder="Last Name" name='l_name' required>
         </div>
         <div class='form-group'>
             <label for='email'>Email: </label>
-            <input type="email" class="form-control" id="email" placeholder="Email" name='email'>
+            <input type="email" class="form-control" id="email" placeholder="Email" name='email' required>
         </div>
         <div class='form-group'>
             <label for='username'>Username: </label>
-            <input type="text" class="form-control" id="username" placeholder="Username" name='username'>
+            <input type="text" class="form-control" id="username" placeholder="Username" name='username' required>
         </div>
         <div class='form-group'>
             <label for='password'>Password: </label>
-            <input type="password" class="form-control" id="password" placeholder="Password" name='password'>
+            <input type="password" class="form-control" id="password" placeholder="Password" name='password' required>
         </div>
         <br>
         <input type='submit' value='Create User' class='btn btn-primary'> &nbsp;
-        <input type='submit' value='Cancel' class='btn btn-default' formaction="{% url 'login:index' %}"> &nbsp;
+        <a class='btn btn-default' href="{% url 'login:index' %}">Cancel</a> &nbsp;
     </form>
 </div>

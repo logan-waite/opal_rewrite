@@ -9,6 +9,11 @@
     <div class='row'>
         <form class='login-wrapper' action='{% url 'login:sign_in' %}' method='post'>
             {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <div class='form-group'>
                 <label for='username'>Username: </label>
                 <input type="text" class="form-control" id="username" placeholder="Username" name='username'>
@@ -25,7 +30,7 @@
         <div class='login-wrapper'>
             <p>Not a user yet? <a href='{% url 'login:new_user' %}'>Sign Up</a>
             <center>Or</center><br>
-            <div class='google_btn'></div>
+            <a href='google_sign_in/'><div class='google_btn'></div></a>
         </div>
     </div>
 </div>
