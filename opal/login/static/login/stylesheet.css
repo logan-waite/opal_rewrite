@@ -17,7 +17,7 @@ header {
     border-radius: 6px;
     background-color:ghostwhite;
     box-shadow: 5px 5px 5px #999;
-    width: 250px;
+    width: 300px;
     margin: 0px auto;
 }
 
@@ -59,4 +59,8 @@ header {
     width: 191px;
     height: 46px;
     margin: 0px auto;
+}
+
+.btn {
+    margin: 5px;
 }

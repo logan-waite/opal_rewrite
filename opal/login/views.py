@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from googleapiclient.discovery import build
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from oauth2client.contrib import xsrfutil
 from oauth2client.client import flow_from_clientsecrets
@@ -26,33 +26,36 @@ FLOW = flow_from_clientsecrets(
     )
 
 # ----------------------------------------------------------------------------
-# All this stuff happens when a user clicks the "Sign in with Google" button
+# If a user changes their mind, but is already logged in.
+@python_2_unicode_compatible
 def google_sign_in(request):
-  storage = Storage(CredentialsModel, 'id', request.user, 'credential')
-  credential = storage.get()
-  if credential is None or credential.invalid == True:
-    FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+    credential = storage.get()
+    if credential is None or credential.invalid == True:
+        FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
                                                    request.user)
-    authorize_url = FLOW.step1_get_authorize_url()
-    return HttpResponseRedirect(authorize_url)
-  else:
-    http = httplib2.Http()
-    http = credential.authorize(http)
-    service = build("calendar", "v3", http=http)
-    # activities = service.activities()
-    # activitylist = activities.list(collection='public', userId='me').execute()
-    # logging.info(activitylist)
+        authorize_url = FLOW.step1_get_authorize_url()
+        return HttpResponseRedirect(authorize_url)
+    else:
+        http = httplib2.Http()
+        http = credential.authorize(http)
+        service = build("calendar", "v3", http=http)
+        return redirect("tasks:index")
 
-    return redirect('tasks:index')
+# When the user comes back from allowing or denying permissions.
 @python_2_unicode_compatible
 def auth_return(request):
-  if not xsrfutil.validate_token(settings.SECRET_KEY, bytes(request.GET['state'], 'utf-8'),
-                                 request.user):
-    return  HttpResponseBadRequest()
-  credential = FLOW.step2_exchange(request.GET)
-  storage = Storage(CredentialsModel, 'id', request.user, 'credential')
-  storage.put(credential)
-  return redirect("tasks:index")
+    if not xsrfutil.validate_token(settings.SECRET_KEY, bytes(request.GET['state'], 'utf-8'),
+                                request.user):
+        return  HttpResponseBadRequest()
+    try:
+        credential = FLOW.step2_exchange(request.GET)
+    except:
+        return render(request, 'login/denied_access.html')
+    else:
+        storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+        storage.put(credential)
+        return redirect("tasks:index")
 # ----------------------------------------------------------------------------
 
 
@@ -65,12 +68,25 @@ def sign_in(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
-    first_name = User.objects.get(username=username).first_name
     if user is not None:
         if user.is_active:
             login(request, user)
+            first_name = User.objects.get(username=username).first_name
+
+            # Google sign_in code
+            storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+            credential = storage.get()
+            if credential is None or credential.invalid == True:
+                FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+                                                           request.user)
+                authorize_url = FLOW.step1_get_authorize_url()
+                return HttpResponseRedirect(authorize_url)
+            else:
+                http = httplib2.Http()
+                http = credential.authorize(http)
+                service = build("calendar", "v3", http=http)
             # Redirect to a success page
-            messages.success(request, "Welcome back, %s!" % first_name)
+                messages.success(request, "Welcome back, %s!" % first_name)
             return redirect('tasks:index')
         else:
             # Return a 'disabled account' error messages
@@ -79,7 +95,7 @@ def sign_in(request):
 
     else:
         # Return an 'invalid login' error message
-        messages.add_message(request, messages.ERROR, 'Invalid Login Information')
+        messages.add_message(request, messages.ERROR, 'Invalid Login Information, please try again')
         return redirect('login:index')
 
 # Load the new user page
@@ -94,12 +110,40 @@ def create_user(request):
     password = request.POST['password']
     email = request.POST['email']
 
-    new_user = User.objects.create_user(username, email, password)
-    new_user.first_name = first_name
-    new_user.last_name = last_name
+    try:
+        new_user = User.objects.create_user(username, email, password)
+        new_user.first_name = first_name
+        new_user.last_name = last_name
+        new_user.save()
+    except Exception as e:
+        if str(e).find('username'):
+            messages.error(request, "That username is already in use")
+        return redirect('login:new_user')
 
-    new_user.save()
+    # Log the new user in so the system doesn't freak out
+    user = authenticate(username=username, password=password)
+    login(request, user)
+
+    # Google sign-in code
+    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+    credential = storage.get()
+    if credential is None or credential.invalid == True:
+        FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+                                                   request.user)
+        authorize_url = FLOW.step1_get_authorize_url()
+        return HttpResponseRedirect(authorize_url)
+    else:
+        http = httplib2.Http()
+        http = credential.authorize(http)
+        service = build("calendar", "v3", http=http)
 
     messages.success(request, "Welcome, %s!" % first_name)
 
     return redirect("tasks:index")
+
+def google_deny(request):
+    curr_user = request.user
+    user = User.objects.get(username=curr_user)
+    logout(request)
+    user.delete()
+    return redirect("login:index")

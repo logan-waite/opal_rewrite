@@ -9,7 +9,13 @@
 <div class='login-wrapper'>
     <form  action='{% url 'login:create_user' %}' method='post'>
         <h2>New User</h2>
+        <hr>
         {% csrf_token %}
+        {% if messages %}
+            {% for message in messages %}
+                <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <div class='form-group'>
             <label for='f_name'>First Name: </label>
             <input type="text" class="form-control" id="f_name" placeholder="First Name" name='f_name' required>

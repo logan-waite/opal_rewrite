@@ -23,3 +23,7 @@ pip install -r /vagrant/requirements.txt
 
 # Set default directory to Django project folder
 echo cd /vagrant/opal/ >> $HOME/.bashrc
+
+# Set alias for common django commands
+echo alias django="python /vagrant/opal/manage.py"
+echo alias runserver="python /vagrant/opal/manage.py runserver 0.0.0.0:8000"

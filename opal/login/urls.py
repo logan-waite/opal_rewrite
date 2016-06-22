@@ -14,5 +14,8 @@ urlpatterns = [
     url(r'^create_user/$', views.create_user, name="create_user"),
     # google auth
     url(r'^oauth2callback/$', views.auth_return, name='auth_return'),
-    url(r'^google_sign_in/$', views.google_sign_in, name='google_sign_in'),
+    # Allow after denying google
+    url(r'^google_allow/$', views.google_sign_in, name='google_sign_in'),
+    # Deny's Google completely
+    url(r'^google_deny/$', views.google_deny, name='google_deny'),
 ]

@@ -6,6 +6,7 @@ from oauth2client.contrib.django_orm import CredentialsField, FlowField
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     company = models.CharField(max_length=150)
+    google_authorized = models.BooleanField(default=0)
 
 class CredentialsModel(models.Model):
     id = models.OneToOneField(User, primary_key=True)

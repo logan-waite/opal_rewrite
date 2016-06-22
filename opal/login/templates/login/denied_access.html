@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<link rel='stylesheet' type='text/css' href='{% static 'login/stylesheet.css' %}'>
+<link rel='stylesheet' type='text/css' href='{% static 'login/bootstrap/css/bootstrap.min.css' %}'>
+<link rel='stylesheet' type='text/css' href='{% static 'login/bootstrap/css/bootstrap-theme.min.css' %}'>
+
+<header><h1>OPAL</h1></header>
+
+<div class='container'>
+    <div class='row'>
+        <form class='login-wrapper' action='#' method='post'>
+            {% csrf_token %}
+            <p class='alert error'>You have denied Opal access to your Gmail and Google Calendar.
+            Some of Opal's features (email, shared calendars) rely on this access.
+            Do you still wish to continue?</p>
+            <input type='submit' class='btn btn-primary' value='Let me authorize Google' formaction="{% url 'login:google_sign_in' %}">
+            {# <input type='submit' class='btn btn-info' value='Sign in without Google' formaction=""> #}
+            <input type='submit' class='btn btn-default' value='I want no part in this' formaction="{% url 'login:google_deny' %}">
+        </form>
+    </div>
+</div>
