@@ -1,0 +1,35 @@
+* {
+    border-radius: 0px;
+}
+body {
+    background: linear-gradient(#CDEFFF, #53C1FF);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.navbar-brand {
+    padding-top: 3px;
+}
+
+.navbar-brand img {
+    margin: 0px;
+    padding: 0px;
+    height: 44px;
+}
+
+#page-body {
+    flex: 1;
+}
+
+header {
+    text-align: center;
+    border-bottom: 1px solid #DADADA;
+    width: 100%;
+    font-family: sans-serif;
+    margin-bottom: 5%;
+}
+
+#footer {
+    text-align: center;
+}
