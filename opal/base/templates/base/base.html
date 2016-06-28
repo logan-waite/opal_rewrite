@@ -4,17 +4,21 @@
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Optional Bootstrap theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> #}
         <!-- Local stylesheet -->
         <link rel='stylesheet' type='text/css' href='{% static 'base/stylesheet.css' %}'>
         <!-- JQuery -->
         <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
         <!-- Latest compiled and minified Bootstrap JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <!-- Font Awesome JS -->
+        <script src="https://use.fontawesome.com/9fd33f348a.js"></script>
         <!-- Local Javascript -->
         <script src="{% static 'base/javascript.js' %}"></script>
+
         <title>{% block title %}{% endblock %} OPAL</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="{% static 'base/images/OPAL_logo.png' %}"
 
     </head>
     <body>
@@ -46,22 +50,37 @@
                   <ul class="dropdown-menu">
                     <li><a href="#">Account</a></li>
                     <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="{% url 'login:user_logout' %}">Logout</a></li>
                   </ul>
                 </li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
-        <div id='page-body'>
-            <div id='sidebar'>{% block sidebar %}{% endblock %}</div>
-            <div id='main'>
+        <div id='messages'>
+            {# <div class='alert alert-success'>Some message here</div> #}
+            {# <div class='alert alert-success'>Another message here</div> #}
+            {% if messages %}
+                {% for message in messages %}
+                    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div id='page-body' class='container'>
+            <div id='sidebar' class='col-sm-4'>
+                <h3>{% block sidebar_title %}{% endblock %}</h3>
+                {% block sidebar %}{% endblock %}
+            </div>
+            <div id='main' class='col-sm-8'>
+            <h3>{% block content_title %}<div style='height: 24px;'></div>{% endblock %} </h3>
             {% block content %}
             {% endblock %}
             </div>
         </div> <!-- End .page-body -->
         <div id='footer'>
             <p> &copy; {% now "Y" %} Logan Waite. All Rights Reserved</p>
+        </div>
+        <div class='facebox'>
         </div>
     </body>
 </html>

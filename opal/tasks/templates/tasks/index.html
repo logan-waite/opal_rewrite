@@ -2,10 +2,4 @@
 
 {% block title %}Tasks | {% endblock %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
-    {% endfor %}
-{% endif %}
-
-This is my new task page!
+{% block content %} This is my new task page!{% endblock %}

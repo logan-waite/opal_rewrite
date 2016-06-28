@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^google_allow/$', views.google_sign_in, name='google_sign_in'),
     # Deny's Google completely
     url(r'^google_deny/$', views.google_deny, name='google_deny'),
+    # ex: /login/logout
+    url(r'^logout/$', views.user_logout, name='user_logout'),
 ]

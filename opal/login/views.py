@@ -86,7 +86,7 @@ def sign_in(request):
                 http = credential.authorize(http)
                 service = build("calendar", "v3", http=http)
             # Redirect to a success page
-                messages.success(request, "Welcome back, %s!" % first_name)
+                messages.info(request, "Welcome back, %s!" % first_name)
             return redirect('tasks:index')
         else:
             # Return a 'disabled account' error messages
@@ -137,7 +137,7 @@ def create_user(request):
         http = credential.authorize(http)
         service = build("calendar", "v3", http=http)
 
-    messages.success(request, "Welcome, %s!" % first_name)
+    messages.info(request, "Welcome, %s!" % first_name)
 
     return redirect("tasks:index")
 
@@ -147,3 +147,7 @@ def google_deny(request):
     logout(request)
     user.delete()
     return redirect("login:index")
+
+def user_logout(request):
+    logout(request)
+    return redirect('login:index')
