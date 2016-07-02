@@ -67,15 +67,10 @@
             {% endif %}
         </div>
         <div id='page-body' class='container'>
-            <div id='sidebar' class='col-sm-4'>
-                <h3>{% block sidebar_title %}{% endblock %}</h3>
                 {% block sidebar %}{% endblock %}
-            </div>
-            <div id='main' class='col-sm-8'>
-            <h3>{% block content_title %}<div style='height: 24px;'></div>{% endblock %} </h3>
-            {% block content %}
-            {% endblock %}
-            </div>
+                {% block content_title %}{% endblock %}
+                {% block content %}
+                {% endblock %}
         </div> <!-- End .page-body -->
         <div id='footer'>
             <p> &copy; {% now "Y" %} Logan Waite. All Rights Reserved</p>

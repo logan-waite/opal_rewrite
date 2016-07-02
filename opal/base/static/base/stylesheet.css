@@ -86,6 +86,23 @@ textarea {
     margin-top: -18px;
 }
 
+.event-block {
+    height: 280px;
+}
+
+.event-block .panel-body {
+    max-height: 191px;
+    overflow-y: auto;
+}
+
+.check-img {
+    height: 16px;
+}
+
+a {
+    cursor: pointer;
+}
+
 header {
     text-align: center;
     border-bottom: 1px solid #DADADA;

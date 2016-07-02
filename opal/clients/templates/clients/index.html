@@ -2,10 +2,11 @@
 
 {% block title %}Clients | {% endblock %}
 
-{% block sidebar_title %} Client List {% endblock %}
 
 {% block sidebar %}
-<div>
+<div id='sidebar' class='col-sm-4'>
+    <h3>Client List</h3>
+
     <ul class="list-group">
         <li class='list-group-item menu'>
             <form>
@@ -26,13 +27,16 @@
 </div>
 {% endblock %}
 
-{% block content_title %} Client Information {% endblock %}
+{% block content_title %} <h3>Client Information</h3> {% endblock %}
 
 {% block content %}
+<div id='main' class='col-sm-8'>
+
     <div class='well'>
         <div class='nav navbar'>
             <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Information</button>
             <button class='btn btn-primary'><i class='fa fa-envelope-o fa-lg'></i> New Email</button>
+            <button class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Product</button>
         </div>
         <!-- Client Information -->
         <div class='panel panel-info'>
@@ -60,12 +64,51 @@
         <!-- Events Attended List -->
         <div class='panel panel-info'>
             <div class='panel-heading'>
-                <h1 class='panel-title'>Event History</h1>
+                <h1 class='panel-title'>Purchase History</h1>
             </div>
             <div class='panel-body'>
-                <ul>
-                    <li>Event 1</li>
-                </ul>
+                <table class='table'>
+                    <tr>
+                        <th></th>
+                        <th>Events</th>
+                        <th>Packages</th>
+                    </tr>
+                    <tr>
+                        <td>Future: </td>
+                        <td>
+                            <ul>
+                                <li>Event</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current:</td>
+                        <td>
+                            <ul>
+                                <li>Event 1</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Package 1</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Past:</td>
+                        <td>
+                            <ul>
+                                <li>Event 2</li>
+                                <li>Event 3</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Package 2</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <!-- Communication History -->
@@ -135,4 +178,6 @@
             </div>
         </div>
     </div>
+</div>
+
 {% endblock %}
