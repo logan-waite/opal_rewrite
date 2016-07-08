@@ -35,6 +35,11 @@ body {
     margin-left: 2px;
 }
 
+.float-left {
+    float: left;
+    margin-right: 2px;
+}
+
 /********************/
 /****** Sidebar *****/
 /********************/
@@ -101,6 +106,78 @@ textarea {
 
 a {
     cursor: pointer;
+}
+
+/********************/
+/***** Calendar *****/
+/********************/
+
+#cal-wrapper h4 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+#cal-wrapper h4 i {
+    cursor:pointer;
+}
+
+.week {
+    width: 100%;
+    display: block;
+    float: left
+}
+
+.day {
+    float:left;
+    border: 1px solid #ddd;
+    width: 14.28%;
+    display: inline-block;
+    position: relative;
+}
+
+.day_inactive {
+    background-color: #ccc;
+    float:left;
+    border: 1px solid #ddd;
+    width: 14.28%;
+    display: inline-block;
+    position: relative;
+}
+
+.day:hover {
+    box-shadow: 0px 0px 10px #666;
+}
+
+.day_ratio {
+    padding-top: 100%;
+}
+
+.day_element {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.day_number {
+    text-align: center;
+    display: block;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    width: 20px;
+}
+
+#cal-wrapper {
+    border: 1px solid #ddd;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 5px 5px 1px #555;
+}
+
+.badge {
+    height: 14px;
 }
 
 header {
