@@ -1,0 +1,28 @@
+<input type='hidden' id='month' value="{{ month }}">
+{% csrf_token %}
+<h4>
+    <i id='prev_month' class='fa fa-toggle-left float-left'></i>
+    June
+    <i id='next_month' class='fa fa-toggle-right float-right'></i>
+</h4>
+{% for week, days in calendar.items %}
+    <div class='week'>
+    {% for day in days %}
+        {% if day.month != month %}
+            <div class='day_inactive'>
+                <div class='day_ratio'></div>
+                <div class='day_element'>
+                    <span class='day_number'>{{ day.day }}</span>
+                </div>
+            </div>
+        {% else %}
+            <div class='day'>
+                <div class='day_ratio'></div>
+                <div class='day_element'>
+                    <span class='day_number'>{{ day.day }}</span>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endfor %}

@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^events/', include('events.urls')),
     url(r'^base/', include('base.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/', include('login.urls')),
     url(r'^', include('login.urls')),
 ]

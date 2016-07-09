@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
 
 {% block title %}Calendar | {% endblock %}
 
@@ -22,10 +23,12 @@
 {% block content %}
 <div class='col-sm-9 col-md-9'>
     <div id='cal-wrapper' class='col-xs-12'>
+        {% csrf_token %}
+        <input type='hidden' id='month' value="{{ month }}">
         <h4>
-            <i class='fa fa-toggle-left float-left'></i>
+            <i id='prev_month' class='fa fa-toggle-left float-left'></i>
             July
-            <i class='fa fa-toggle-right float-right'></i>
+            <i id='next_month' class='fa fa-toggle-right float-right'></i>
         </h4>
         {% for week, days in calendar.items %}
             <div class='week'>
