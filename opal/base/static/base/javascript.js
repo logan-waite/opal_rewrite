@@ -41,18 +41,19 @@ $(document).ready(function() {
         $(".alert").fadeOut('slow');
     }, 1500);
 
-    // Calendar changing the month functions
-    $('#prev_month').click(function(event) {
-        month = $('#month').val();
-        $.post("", {'month':month, 'direction':'prev'}, function(result) {
-            $('#cal-wrapper').html(result);
-        })
-    });
-
-    $('#next_month').click(function(event) {
-        month = $('#month').val();
-        $.post("", {'month':month, 'direction':'next'}, function(result) {
-            $('#cal-wrapper').html(result);
-        })
-    })
+    // $('#prev_month').click(function(event) {
+    //     alert("Previous!");
+    //     month = $('#month').val();
+    //     $.post("", {'month':month, 'direction':'prev'}, function(result) {
+    //         $('#cal-wrapper').html(result);
+    //     })
+    // })
+    //
+    // $('#next_month').click(function(event) {
+    //     alert("Next!");
+    //     month = $('#month').val();
+    //     $.post("", {'month':month, 'direction':'next'}, function(result) {
+    //         $('#cal-wrapper').html(result);
+    //     })
+    // })
 });

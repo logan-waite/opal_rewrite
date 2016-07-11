@@ -118,8 +118,9 @@ a {
     margin-bottom: 15px;
 }
 
-#cal-wrapper h4 i {
-    cursor:pointer;
+#cal-wrapper h4 button {
+    background: none;
+    border: none;
 }
 
 .week {

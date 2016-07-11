@@ -9,6 +9,7 @@
         <li class='list-group-item menu'>
             <i class='fa fa-plus fa-lg btn btn-success'></i>
             <i class='fa fa-minus fa-lg btn btn-danger'></i>
+            <i class='fa fa-history fa-lg btn btn-info float-right'> Today</i>
         </li>
         <li class="list-group-item list-header"><strong>Scheduled Events</strong></li>
         <div class='list'>
@@ -17,18 +18,22 @@
             <li class="list-group-item">Meeting 3</li>
         </div>
     </ul>
+    <form method='post' id='choose_month'>
+        {% csrf_token %}
+        <input name='month' type='hidden' value="{{ month }}">
+        <input name='year' type='hidden' value="{{ year }}">
+    </form>
 </div>
+
 {% endblock %}
 
 {% block content %}
 <div class='col-sm-9 col-md-9'>
     <div id='cal-wrapper' class='col-xs-12'>
-        {% csrf_token %}
-        <input type='hidden' id='month' value="{{ month }}">
         <h4>
-            <i id='prev_month' class='fa fa-toggle-left float-left'></i>
-            July
-            <i id='next_month' class='fa fa-toggle-right float-right'></i>
+            <button name='prev' value='1' form='choose_month' class='float-left'><i class='fa fa-toggle-left'></i></button>
+            {{ month_name }} {{ year }}
+            <button name='next' value='1' form='choose_month' class='float-right'><i class='fa fa-toggle-right'></i></button>
         </h4>
         {% for week, days in calendar.items %}
             <div class='week'>
