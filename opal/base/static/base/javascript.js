@@ -41,4 +41,11 @@ $(document).ready(function() {
         $(".alert").fadeOut('slow');
     }, 1500);
 
+    // Facebox
+    $('#facebox-back').click(function() {alert("hi")})
+    $('#add_client').click(function() {
+        alert('adding')
+    })
+
+
 });

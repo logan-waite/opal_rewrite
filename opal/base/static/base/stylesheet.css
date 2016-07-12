@@ -40,6 +40,19 @@ body {
     margin-right: 2px;
 }
 
+header {
+    text-align: center;
+    border-bottom: 1px solid #DADADA;
+    width: 100%;
+    font-family: sans-serif;
+    margin-bottom: 5%;
+}
+
+#footer {
+    border-top: 2px solid skyblue;
+    text-align: center;
+}
+
 /********************/
 /****** Sidebar *****/
 /********************/
@@ -180,16 +193,38 @@ a {
 .badge {
     height: 14px;
 }
+/********************/
+/***** Facebox ******/
+/********************/
 
-header {
-    text-align: center;
-    border-bottom: 1px solid #DADADA;
-    width: 100%;
-    font-family: sans-serif;
-    margin-bottom: 5%;
+#facebox {
+    z-index: 10;
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+    height: 500px;
+    width: 500px;
+    background-color: ghostwhite;
+    /*display: hidden;*/
 }
 
-#footer {
-    border-top: 2px solid skyblue;
-    text-align: center;
+#facebox-back {
+    z-index: 9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #222;
+    opacity: 0.75;
+    display: block;
+}
+
+#facebox-close {
+    position: absolute;
+    right: -1px;
+    top: -5px;
 }
