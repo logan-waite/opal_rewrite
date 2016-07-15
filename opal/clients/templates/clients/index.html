@@ -13,169 +13,23 @@
                 <input type='submit' class='search-btn' value=''>
             </form>
             <i id='add_client' class='fa fa-plus fa-lg btn btn-success'></i>
-            <i class='fa fa-clock-o fa-lg btn btn-info float-right'></i>
-            <i class='fa fa-sort-alpha-desc fa-lg btn btn-info float-right'></i>
-            <i class='fa fa-sort-alpha-asc fa-lg btn btn-info float-right'></i>
+            <i class='fa fa-clock-o fa-lg btn btn-info disabled float-right'></i>
+            <i id='za' class='fa fa-sort-alpha-desc fa-lg btn btn-info float-right'></i>
+            <i id='az' class='fa fa-sort-alpha-asc fa-lg btn btn-info float-right'></i>
         </li>
-        <div class='list'>
-            <li class="list-group-item">first Client</li>
-            <li class="list-group-item active">second Client</li>
-            <li class="list-group-item">third Client</li>
+        <div id='client-list' class='list'>
+            {% for client, info in clients.items %}
+                <li class="list-group-item" value='{{ info.id }}'>{{ info.first_name }} {{ info.last_name }}</li>
+            {% endfor %}
         </div>
     </ul>
+    <form method='post' name='sort_buttons'>
+        {% csrf_token %}
+    </form>
 </div>
+
 {% endblock %}
-
-
 {% block content %}
 <div id='main' class='col-sm-8'>
-
-    <div class='well'>
-        <div class='nav navbar'>
-            <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Information</button>
-            <button class='btn btn-primary'><i class='fa fa-envelope-o fa-lg'></i> New Email</button>
-            <button class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Product</button>
-        </div>
-        <!-- Client Information -->
-        <div class='panel panel-info'>
-            <div class='panel-heading'>
-                <h5 class='panel-title'>First Client name</h5>
-            </div>
-            <div class='panel-body'>
-                <table class='table'>
-                    <tr>
-                        <th>Emails</th>
-                        <th>Phone Numbers</th>
-                        <th width='200px'>Address</th>
-                    </tr>
-                    <tr>
-                        <td>email1@gmail.com</td>
-                        <td>(555) 555-5555</td>
-                        <td width='200px'>123 Main<br>City, St<br>12345</td>
-                    </tr>
-                    <tr>
-                        <td>email2@email.net</td>
-                        <td>(572)176-2749</td>
-                </table>
-            </div>
-        </div>
-        <!-- Events Attended List -->
-        <div class='panel panel-info'>
-            <div class='panel-heading'>
-                <h1 class='panel-title'>Purchase History</h1>
-            </div>
-            <div class='panel-body'>
-                <table class='table'>
-                    <tr>
-                        <th></th>
-                        <th>Events</th>
-                        <th>Packages</th>
-                    </tr>
-                    <tr>
-                        <td>Future: </td>
-                        <td>
-                            <ul>
-                                <li>Event</li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Current:</td>
-                        <td>
-                            <ul>
-                                <li>Event 1</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>Package 1</li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Past:</td>
-                        <td>
-                            <ul>
-                                <li>Event 2</li>
-                                <li>Event 3</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>Package 2</li>
-                            </ul>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <!-- Communication History -->
-        <div class='panel panel-info'>
-            <div class='panel-heading'>
-                <h1 class='panel-title'>Communicaton History</h1>
-            </div>
-            <div class='panel-body'>
-                <div class='panel panel-warning'>
-                    <div class='panel-heading'>
-                        <h1 class='panel-title'>Comment</h1>
-                    </div>
-                    <div class='panel-body'>
-                        A comment would be in something like this.
-                        <hr>
-                        <i class='fa fa-pencil-square fa-lg'></i>
-                        <i class='fa fa-minus-square fa-lg'></i>
-                         <span class='float-right'>~ User Name, 01/01/2016</span>
-                    </div>
-                </div>
-                <div class='panel panel-success'>
-                    <div class='panel-heading'>
-                        <h2 class='panel-title'>Email (Email Subject)</h2>
-                    </div>
-                    <div class='panel-body'>
-                        Jimmy - <br>
-                        This is what an email to a client would look like.<br>
-                        Sincerely, <br><br>
-                        Joey
-                        <hr>
-                        <span class='float-right'>~ User Name, 02/13/26</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- New Email/Comment Form -->
-        <div class='panel panel-info'>
-            <div class='panel-heading'>
-                <h1 class='panel-title'>New Email/Comment</h1>
-            </div>
-            <div class='panel-body'>
-                <ul class='nav nav-pills'>
-                    <li role='presentation' class='active'><a>Email</a></li>
-                    <li role='presentation'><a>Comment</a></li>
-                </ul>
-                <br>
-                <form>
-                    <div class='form-group'>
-                        <label for='email_address'>Address: </label>
-                        <select id='email_address' name='email_address' class='form-control'>
-                            <option value='0'>email1@gmail.com</option>
-                            <option value='2'>email2@email.net</option>
-                        </select>
-                    </div>
-                    <div class='form-group'>
-                        <label for='email_subject'>Subject: </label>
-                        <input type='text' id='email_subject' name='email_subject' class='form-control'>
-                    </div>
-                    <div class='form-group'>
-                        <label for='content'> Content: </label>
-                        <textarea id='content' name='content' class='form-control'></textarea>
-                    </div>
-                    <div class='form-group'>
-                        <input class='btn btn-primary' type='submit' value='Submit'>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
-
 {% endblock %}

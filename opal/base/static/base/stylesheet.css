@@ -193,6 +193,40 @@ a {
 .badge {
     height: 14px;
 }
+
+/********************/
+/*** Address Form ***/
+/********************/
+
+.address-group {
+}
+
+.city {
+    float: left;
+    width: 200px;
+    margin-right: 10px;
+}
+
+.state {
+    float: left;
+    width: 45px;
+    margin-right: 10px;
+}
+
+.zip {
+    float: left;
+    width: 80px;
+}
+
+/********************/
+/*** Client Info ****/
+/********************/
+
+#address-list, #phone-list, #email-list {
+    width: 33%;
+    float: left;
+}
+
 /********************/
 /***** Facebox ******/
 /********************/
@@ -200,7 +234,7 @@ a {
 #facebox {
     z-index: 10;
     border-radius: 4px;
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     margin-left: -250px;
@@ -208,23 +242,36 @@ a {
     height: 500px;
     width: 500px;
     background-color: ghostwhite;
-    /*display: hidden;*/
+    display: none;
 }
 
 #facebox-back {
     z-index: 9;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
     background: #222;
     opacity: 0.75;
-    display: block;
+    display: none;
 }
 
 #facebox-close {
     position: absolute;
     right: -1px;
     top: -5px;
+    color: darkgrey;
+}
+
+#facebox-close:hover {
+    color: grey;
+}
+
+#facebox-content {
+    margin: 10px;
+}
+
+#facebox-content h2 {
+    text-align: center;
 }
