@@ -10,7 +10,7 @@ OPAL is a system centered around the client. Clients can buy various products (n
     - Address (right now we don't care if it's mailing or street, so we don't specify)
     - Links to past products/services that the client has had, in addition to any present and future.
 
-    The current database model for clients, as determined by Django's ORM, is as follows:
+The current database model for clients, as determined by Django's ORM, is as follows:
     **Client:**
         - first_name : First name of the client (also includes middle name(s) if applicable)
         - last_name : Last name of the client (Literally pulls the last word from the full_name string)
@@ -19,11 +19,9 @@ OPAL is a system centered around the client. Clients can buy various products (n
         - state
         - zipcode
         - events - a [ManyToManyField](https://docs.djangoproject.com/en/1.9/topics/db/models/#many-to-many-relationships) that links to the Event object.
-
     **Email:**
         - client : a [ForeignKey](https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.ForeignKey) that links to the Client
         - email : an email for the client
-
     **Phone:**
         - client : a [ForeignKey](https://docs.djangoproject.com/en/1.9/ref/models/fields/#django.db.models.ForeignKey) that links to the Client
         - phone : an phone number for the client
