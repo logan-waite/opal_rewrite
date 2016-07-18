@@ -1,0 +1,2 @@
+# OPAL
+Event Managment System
