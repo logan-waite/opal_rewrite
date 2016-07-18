@@ -55,14 +55,23 @@ def client_info(request):
         client_id = request.POST['client']
         client = Client.objects.get(pk=client_id)
         emails = Email.objects.filter(client=client_id).all()
+        phone_numbers = Phone.objects.filter(client=client_id).all()
         email_list = []
+        phone_list = []
         for email in emails:
             email_list.append(email.email)
+        for phone in phone_numbers:
+            phone_list.append(phone.phone)
 
         data = {}
         data['client_id'] = client.id
         data['full_name'] = "%s %s" % (client.first_name, client.last_name)
         data['emails'] = email_list
+        data['phone_numbers'] = phone_list
+        data['address'] = client.street_address
+        data['city'] = client.city
+        data['state'] = client.state
+        data['zip'] = client.zipcode
 
         return render(request, "clients/client_info.html", data)
     except:

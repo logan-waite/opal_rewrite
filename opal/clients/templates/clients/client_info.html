@@ -13,18 +13,36 @@
         <div class='panel-body'>
             <div id='email-list' class='list-group'>
                 <div class='list-group-item'>
-                    <strong>Emails</strong>
+                    <strong>Email Addresses</strong>
                 </div>
+                {% for email in emails %}
+                <div class='list-group-item'>
+                    {{ email }}
+                </div>
+                {% endfor %}
             </div>
             <div id='phone-list' class='list-group'>
                 <div class='list-group-item'>
                     <strong>Phone Numbers</strong>
                 </div>
+                {% for phone in phone_numbers %}
+                    <div class='list-group-item'>
+                        {{ phone }}
+                    </div>
+                {% endfor %}
             </div>
             <div id='address-list' class='list-group'>
                 <div class='list-group-item'>
                     <strong>Address</strong>
                 </div>
+                {% if address %}
+                <div class='list-group-item'>
+                    {{ address }} <br>
+                    {{ city }}
+                    {{ state }}
+                    {{ zip }}
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
