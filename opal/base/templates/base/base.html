@@ -1,6 +1,11 @@
 {% load staticfiles %}
 <html>
     <head>
+        <!-- Local Bootstrap/Jquery for working offline -->
+        <link rel='stylesheet' type='text/css' href='{% static "base/bootstrap/css/bootstrap.css" %}'>
+        <script src='{% static "base/jquery-2.2.4.min.js" %}'></script>
+        <script src="{% static 'base/bootstrap/js/bootstrap.js'}"></script>
+
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Optional Bootstrap theme -->
