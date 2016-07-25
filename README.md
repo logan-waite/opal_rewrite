@@ -46,7 +46,7 @@ The current database model for events, as determined by Django's ORM, is as foll
 - description : What the event is about.
 - start : The date and time the event starts ( a [DateTimeField](https://docs.djangoproject.com/en/1.9/ref/models/fields/#datetimefield) )
 - end : The date and time the event ends ( a [DateTimeField](https://docs.djangoproject.com/en/1.9/ref/models/fields/#datetimefield) )
-- 
+
 ### Services
 
 ### Products
