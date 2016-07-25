@@ -39,6 +39,14 @@ Events are major gatherings that multiple people are a part of. Every event shou
 - Where the event is taking place
 - A checklist of items needed for the event to happen successfully
     
+The current database model for events, as determined by Django's ORM, is as follows:
+
+**Event**
+- name : The name of the event (for marketing, telling them apart, whatever.)
+- description : What the event is about.
+- start : The date and time the event starts ( a [DateTimeField](https://docs.djangoproject.com/en/1.9/ref/models/fields/#datetimefield) )
+- end : The date and time the event ends ( a [DateTimeField](https://docs.djangoproject.com/en/1.9/ref/models/fields/#datetimefield) )
+- 
 ### Services
 
 ### Products
