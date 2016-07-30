@@ -1,0 +1,18 @@
+<h2>Add New Event</h2>
+<form action='new_event_submit/' method='post'>
+    {% csrf_token %}
+    <div class='form-group'>
+        <label for='event_name'>Name of Event:</label>
+        <input type='text' id='event_name' class='form-control' name='name' placeholder='Name'>
+    </div>
+    <div class='form-group'>
+        <label for='event_description'>Description of Event:</label>
+        <input type='text' id='event_name' class='form-control' name='description' placeholder='Description'>
+    </div>
+    <div>
+        <label for='event_price'>Price (In Dollars):</label>
+        <input type='number' id='event_price' class='form-control' name='price' placeholder='Price'>
+    </div>
+    <br>
+    <input type='submit' value='Submit' class='btn btn-primary'>
+</form>

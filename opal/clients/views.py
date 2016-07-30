@@ -2,6 +2,7 @@ import struct
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.contrib import messages
 from clients.models import Client, Email, Phone
 
 # Create your views here.
@@ -16,6 +17,7 @@ def index(request):
 
 @login_required
 def get_clients(request):
+    # Check to see if the clients need to be sorted.
     try:
         if request.POST['sort'] == 'az':
             all_clients = Client.objects.order_by('first_name').all()
@@ -25,6 +27,7 @@ def get_clients(request):
     except:
         all_clients = Client.objects.all()
         is_sorted = False;
+
     clients = {}
     i = 0
     for client in all_clients:
@@ -90,29 +93,35 @@ def add_client_submit(request):
     state = request.POST['state']
     zip_code = request.POST['zip']
 
-    client = Client(
-        first_name=first_name,
-        last_name=last_name,
-        street_address=address,
-        city=city,
-        state=state,
-        zipcode=zip_code
-    )
-
-    client.save()
-
-    if email is not "":
-        email_info = Email(
-            client=client,
-            email=email
+    try:
+        client = Client(
+            first_name=first_name,
+            last_name=last_name,
+            street_address=address,
+            city=city,
+            state=state,
+            zipcode=zip_code
         )
-        email_info.save()
 
-    if phone is not "":
-        phone_info = Phone(
-            phone=phone,
-            client=client
-        )
-        phone_info.save()
+        client.save()
+
+        if email is not "":
+            email_info = Email(
+                client=client,
+                email=email
+            )
+            email_info.save()
+
+        if phone is not "":
+            phone_info = Phone(
+                phone=phone,
+                client=client
+            )
+            phone_info.save()
+
+        space = " "
+        messages.success(request, 'Client "%s" saved.' % space.join(full_name))
+    except:
+        messages.error(request, "There was an error saving your client.")
 
     return redirect('clients:index')

@@ -275,3 +275,11 @@ a {
 #facebox-content h2 {
     text-align: center;
 }
+
+/********************/
+/****** Alerts ******/
+/********************/
+
+.general-alert {
+    z-index: 10000;
+}

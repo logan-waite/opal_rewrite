@@ -1,0 +1,21 @@
+<h2>Schedule Event</h2>
+<form action='schedule_event_submit/' method='post'>
+    <div class='form-group'>
+        <label for='events'>Events: </label>
+        <select id='events' name='event' class='form-control'>
+            <option value='0'> -- </option>
+            {% if events %}
+                {% for event in events %}
+                    <option value='{{ event.id }}'>{{ event.name }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+    <div class='form-group'>
+        <label for='places'>Places: </label>
+        <select id='places' name='place' class='form-control'>
+            <option value='0'> -- </option>
+        </select>
+    </div>
+    <input type='submit' value='Submit' class='btn btn-primary'>
+</form>

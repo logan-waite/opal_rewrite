@@ -2,9 +2,9 @@
 <html>
     <head>
         <!-- Local Bootstrap/Jquery for working offline -->
-        <link rel='stylesheet' type='text/css' href='{% static "base/bootstrap/css/bootstrap.css" %}'>
+        <!-- <link rel='stylesheet' type='text/css' href='{% static "base/bootstrap/css/bootstrap.css" %}'>
         <script src='{% static "base/jquery-2.2.4.min.js" %}'></script>
-        <script src="{% static 'base/bootstrap/js/bootstrap.js'}"></script>
+        <script src="{% static 'base/bootstrap/js/bootstrap.js' %}"></script> -->
 
         <!-- Latest compiled and minified Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -13,7 +13,7 @@
         <!-- Local stylesheet -->
         <link rel='stylesheet' type='text/css' href='{% static 'base/stylesheet.css' %}'>
         <!-- JQuery -->
-        <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
         <!-- Latest compiled and minified Bootstrap JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <!-- Font Awesome JS -->
@@ -67,7 +67,7 @@
             {# <div class='alert alert-success'>Another message here</div> #}
             {% if messages %}
                 {% for message in messages %}
-                    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                    <div{% if message.tags %} class="alert alert-{{ message.tags }} general-alert"{% endif %}>{{ message }}</div>
                 {% endfor %}
             {% endif %}
         </div>

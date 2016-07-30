@@ -54,9 +54,7 @@ $(document).ready(function() {
 
     // "Add Client" Facebox
     $('#add_client').click(function() {
-        $('#facebox-content').load('add_client')
-        $('#facebox-back').css('display', 'block')
-        $('#facebox').css('display', 'block')
+        load_facebox('add_client');
     })
 
     // Sort buttons
@@ -91,17 +89,43 @@ $(document).ready(function() {
         client_id = $(this).val();
         $('#main').load('client_info/', {client:client_id})
     })
+
+    /***************/
+    /* EVENT PAGE */
+    /***************/
+
+    // "Add Event" Facebox
+    $('#add_event').click(function() {
+        load_facebox('new_event_form')
+    })
+
+    // "Schedule Event" Facebox
+    $('#schedule_event').click(function() {
+        load_facebox('schedule_event_form');
+    })
+
     /***********/
     /* FACEBOX */
     /***********/
 
     // Facebox
+    function load_facebox(url) {
+        $('#facebox-content').load(url)
+        $('#facebox-back').css('display', 'block')
+        $('#facebox').css('display', 'block')
+    }
+
     $('#facebox-close').click(function() {
         $('#facebox-back').css('display', 'none')
         $('#facebox').css('display', 'none')
         $('#facebox-content').html("")
     })
 
+    $('#facebox-back').click(function() {
+        $('#facebox-back').css('display', 'none')
+        $('#facebox').css('display', 'none')
+        $('#facebox-content').html("")
+    })
     // Test facebox views
 
     //$('#facebox-content').load('add_client')
