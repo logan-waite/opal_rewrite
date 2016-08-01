@@ -12,10 +12,55 @@
         </select>
     </div>
     <div class='form-group'>
-        <label for='places'>Places: </label>
+        <i id='add_place_button' class='fa fa-plus-square fa-lg' style='color: blue; cursor: pointer;'></i> <label for='places'>Places: </label>
+        {% if places %}
         <select id='places' name='place' class='form-control'>
             <option value='0'> -- </option>
         </select>
+        {% endif %}
     </div>
-    <input type='submit' value='Submit' class='btn btn-primary'>
+    <div id='add_place'>
+        <form id='add_place_form' action='add_place/' method='post'>
+            <div class='form-group'>
+                <label for='place_name'>Name: </label>
+                <input type='text' placeholder='Name' id='place_name' name='name' class='form-control'>
+            </div>
+            <div class='form-group address-group'>
+                <div class='address_number'>
+                    <label for='address'>Address:</label> <label for='number' class='float-right'>Street/Room Number:</label>
+                    <input type='text' id='address' class='form-control' name='address'>
+                    <input type='number' id='number' class='form-control' name='number'>
+                </div>
+                <div class='city'>
+                    <label for='city'>City:</label>
+                    <input type='text' id='city' class='form-control' name='city'>
+                </div>
+                <div class='state'>
+                    <label for='state'>State:</label>
+                    <input type='text' id='state' class='form-control' name='state' maxlength="2">
+                </div>
+                <div class='zip'>
+                    <label for='zip'>Zip:</label>
+                    <input type='text' id='zip' class='form-control' name='zip'>
+                </div>
+            </div>
+            <input type='submit' value='Add Place' form='add_place_form' class='btn btn-primary'>
+        </form>
+    </div>
+    <input id='schedule_submit' type='submit' value='Submit' class='btn btn-primary'>
 </form>
+
+<script>
+$('#add_place_button').on('click', function() {
+    if($('#add_place').css('display') == 'block')
+    {
+        $('#add_place').slideUp();
+        $('#schedule_submit').removeClass('disabled');
+    }
+    else
+    {
+        $('#add_place').slideDown();
+        $('#schedule_submit').addClass('disabled');
+    }
+})
+</script>
