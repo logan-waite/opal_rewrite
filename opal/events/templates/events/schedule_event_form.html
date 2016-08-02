@@ -1,5 +1,6 @@
 <h2>Schedule Event</h2>
-<form action='schedule_event_submit/' method='post'>
+<form id='schedule_event' action='schedule_event_submit/' method='post'>
+    {% csrf_token %}
     <div class='form-group'>
         <label for='events'>Events: </label>
         <select id='events' name='event' class='form-control'>
@@ -16,40 +17,48 @@
         {% if places %}
         <select id='places' name='place' class='form-control'>
             <option value='0'> -- </option>
+            {% for place in places %}
+                <option value='{{ place.id }}'>{{ place.name }}</option>
+            {% endfor %}
         </select>
         {% endif %}
-    </div>
-    <div id='add_place'>
-        <form id='add_place_form' action='add_place/' method='post'>
-            <div class='form-group'>
-                <label for='place_name'>Name: </label>
-                <input type='text' placeholder='Name' id='place_name' name='name' class='form-control'>
-            </div>
-            <div class='form-group address-group'>
-                <div class='address_number'>
-                    <label for='address'>Address:</label> <label for='number' class='float-right'>Street/Room Number:</label>
-                    <input type='text' id='address' class='form-control' name='address'>
-                    <input type='number' id='number' class='form-control' name='number'>
-                </div>
-                <div class='city'>
-                    <label for='city'>City:</label>
-                    <input type='text' id='city' class='form-control' name='city'>
-                </div>
-                <div class='state'>
-                    <label for='state'>State:</label>
-                    <input type='text' id='state' class='form-control' name='state' maxlength="2">
-                </div>
-                <div class='zip'>
-                    <label for='zip'>Zip:</label>
-                    <input type='text' id='zip' class='form-control' name='zip'>
-                </div>
-            </div>
-            <input type='submit' value='Add Place' form='add_place_form' class='btn btn-primary'>
-        </form>
+        <label for='from_date'>From: <input id='from_date' type='text' class='form-control' name='from'></label>
+        <label for='to_date'>To: <input id='to_date' type='text' class='form-control' name='to'></label>
     </div>
     <input id='schedule_submit' type='submit' value='Submit' class='btn btn-primary'>
-</form>
 
+</form>
+<div id='add_place'>
+    <form id='add_place_form' action='add_place/' method='post'>
+        {% csrf_token %}
+        <div class='form-group'>
+            <label for='place_name'>Name: </label>
+            <input type='text' placeholder='Name' id='place_name' name='name' class='form-control'>
+        </div>
+        <div class='form-group address-group'>
+            <div class='address_number'>
+                <label for='address'>Address:</label> <label for='number' class='float-right'>Room Number:</label>
+                <input type='text' id='address' class='form-control' name='address'>
+                <input type='number' id='number' class='form-control' name='number'>
+            </div>
+            <div class='city'>
+                <label for='city'>City:</label>
+                <input type='text' id='city' class='form-control' name='city'>
+            </div>
+            <div class='state'>
+                <label for='state'>State:</label>
+                <input type='text' id='state' class='form-control' name='state' maxlength="2">
+            </div>
+            <div class='zip'>
+                <label for='zip'>Zip:</label>
+                <input type='text' id='zip' class='form-control' name='zip'>
+            </div>
+        </div>
+        <input type='submit' value='Add Place' form='add_place_form' class='btn btn-primary'>
+    </form>
+</div>
+
+<!-- JAVASCRIPT -->
 <script>
 $('#add_place_button').on('click', function() {
     if($('#add_place').css('display') == 'block')
@@ -63,4 +72,50 @@ $('#add_place_button').on('click', function() {
         $('#schedule_submit').addClass('disabled');
     }
 })
+$('#add_place_form').on('submit', function(event) {
+    event.preventDefault();
+    var data = $('#add_place_form').serialize();
+    $.post('add_place/',
+        {
+            "name":$('#place_name').val(),
+            "address":$('#address').val(),
+            "number":$('#number').val(),
+            "city":$('#city').val(),
+            "state":$('#state').val(),
+            "zip":$("#zip").val()
+        },
+        function(result) {
+            console.log(result);
+            $('#facebox-content').html(result);
+    })
+})
+var dateFormat = "mm/dd/yy",
+   from = $( "#from_date" ).datepicker({
+       defaultDate: "+1w",
+       changeMonth: true,
+       numberOfMonths: 3
+     })
+     .on( "change", function() {
+       to.datepicker( "option", "minDate", getDate( this ) );
+     }),
+   to = $( "#to_date" ).datepicker({
+     defaultDate: "+1w",
+     changeMonth: true,
+     numberOfMonths: 3
+   })
+   .on( "change", function() {
+     from.datepicker( "option", "maxDate", getDate( this ) );
+   });
+
+ function getDate( element ) {
+   var date;
+   try {
+     date = $.datepicker.parseDate( dateFormat, element.value );
+   } catch( error ) {
+     date = null;
+   }
+
+   return date;
+}
+
 </script>
