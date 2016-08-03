@@ -20,6 +20,7 @@ body {
     top: 15px;
     right: 10px;
     width: 250px;
+    z-index: 10000;
 }
 
 #messages .alert {
@@ -302,7 +303,3 @@ a {
 /********************/
 /****** Alerts ******/
 /********************/
-
-.general-alert {
-    z-index: 10000;
-}

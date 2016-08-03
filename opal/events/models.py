@@ -37,7 +37,7 @@ class Scheduled_Event(models.Model):
     end = models.DateTimeField()
 
     def __str__(self):
-        return self.event
+        return self.event.name
 
 class Scheduled_Event_Checklist(models.Model):
     checklist_item = models.ForeignKey(Checklist_Item)

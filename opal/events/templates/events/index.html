@@ -4,6 +4,9 @@
 {% block title %}Events | {% endblock %} <!-- Products? -->
 
 {% block sidebar %}
+{% for things in something %}
+    {{ things }}
+{% endfor %}
 <div>
     <ul class="list-group">
         <li class='list-group-item'>
@@ -12,7 +15,7 @@
             {# <button class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Package</button> #}
             {# <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Packages</button> #}
             <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Events</button>
-            <button class='btn btn-primary' id='edit_places'><i class='fa fa-plus fa-lg'></i> Edit Places</button>            
+            <button class='btn btn-primary' id='edit_places'><i class='fa fa-pencil-square fa-lg'></i> Edit Places</button>
         </li>
     </ul>
 </div>
@@ -21,13 +24,15 @@
 {% block content %}
 <div id='main' class='col-sm-12'>
 
+    {% for event in events %}
     <div class='col-sm-3 event-block'>
         <div class='panel panel-default'>
             <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
+                <h1 class='panel-title text-center'>{{ event.event }}<br>{{ event.start }} - {{ event.end }}</h1>
             </div>
             <div class='panel-body'>
-                Place<br>
+                {{ event.place }}
+                <br>
                 <img src='{% static "events/images/incomplete.png" %}' class='check-img'/> Checklist <i class='fa fa-caret-down'></i>
                 <ul>
                     <li><input type='checkbox' id='checklist-item'> <label for='checklist-item'>Check 1</label></li>
@@ -41,119 +46,7 @@
             </div>
         </div>
     </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                125 people attending.
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                125 people attending.
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-            </div>
-        </div>
-    </div>
-    <div class='col-sm-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>Event Title <br> Date</h1>
-            </div>
-            <div class='panel-body'>
-                Place
-                <hr>
-                125 people attending.
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

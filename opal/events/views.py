@@ -1,3 +1,5 @@
+import time
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -6,7 +8,25 @@ from events.models import Event, Place, Scheduled_Event
 # Create your views here.
 @login_required
 def index(request):
-    return render(request, 'events/index.html')
+    data = {}
+
+    scheduled_events = Scheduled_Event.objects.order_by('start').all()
+
+    for event in scheduled_events:
+        # Format dates to be readable for the user
+        # Start Date
+        start = str(event.start).split(" ")
+        start_date = time.strftime('%m/%d', time.strptime(start[0], '%Y-%m-%d'))
+        event.start = start_date
+        # End Date
+        end = str(event.end).split(" ")
+        end_date = time.strftime('%m/%d', time.strptime(end[0], '%Y-%m-%d'))
+        event.end = end_date
+
+
+    data['events'] = scheduled_events
+
+    return render(request, 'events/index.html', data)
 
 @login_required
 def new_event_form(request):
@@ -46,19 +66,24 @@ def schedule_event_submit(request):
     place = request.POST['place']
     from_date = request.POST['from']
     to_date = request.POST['to']
+
+    start_date = time.strftime('%Y-%m-%d', time.strptime(from_date, '%m/%d/%Y'))
+    end_date = time.strftime('%Y-%m-%d', time.strptime(to_date, '%m/%d/%Y'))
+
     try:
+        # event =
         scheduled_event = Scheduled_Event(
-            event=event,
-            place=place,
-            start=from_date,
-            end=to_date
+            event_id=event,
+            place_id=place,
+            start=start_date,
+            end=end_date
         )
 
         scheduled_event.save()
 
-        messages.success('Your event was sucessfully scheduled.')
+        messages.success(request, 'Your event was sucessfully scheduled.')
     except:
-        messages.error('Unable to schedule your event.')
+        messages.error(request, 'Unable to schedule your event.')
     return redirect('events:index')
 
 @login_required
