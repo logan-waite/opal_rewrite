@@ -115,3 +115,21 @@ def add_place(request):
     data['places'] = Place.objects.order_by('name').all()
 
     return render(request, 'events/schedule_event_form.html', data)
+
+@login_required
+def edit_events(request):
+    data = {}
+    data['events'] = Event.objects.order_by('name').all()
+
+    return render(request, 'events/edit_events_form.html', data)
+
+@login_required
+def get_event_info(request):
+    event_id = request.POST['event_id']
+    event = Event.objects.get(pk=event_id)
+
+    data = {}
+    data['description'] = event.description
+    data['price'] = event.price
+
+    return render(request, 'events/edit_event_info.html', data)

@@ -104,6 +104,11 @@ $(document).ready(function() {
         load_facebox('schedule_event_form');
     })
 
+    // "Edit Events" Facebox
+    $('#edit_events').click(function() {
+        load_facebox('edit_events');
+    })
+
     /***********/
     /* FACEBOX */
     /***********/

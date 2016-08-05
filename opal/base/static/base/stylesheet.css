@@ -300,6 +300,20 @@ a {
     padding: 10px;
 }
 
+#edit_event_info {
+    display: none;
+}
+
+#new_check_item {
+    width: 75%;
+    display: inline;
+    margin-right: 5px;
+}
+
+#new_checklist_form {
+    display: none;
+}
+
 /********************/
 /****** Alerts ******/
 /********************/

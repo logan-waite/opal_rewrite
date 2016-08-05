@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'schedule_event_form/$', views.schedule_event_form, name='schedule_event_form'),
     url(r'schedule_event_submit/$', views.schedule_event_submit, name='schedule_event_submit'),
     url(r'add_place/$', views.add_place, name='add_place'),
+    url(r'edit_events/$', views.edit_events, name='edit_events'),
+    url(r'get_event_info/$', views.get_event_info, name='get_event_info'),
 ]

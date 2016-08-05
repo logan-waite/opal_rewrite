@@ -1,0 +1,25 @@
+<h2>Edit Event</h2>
+<form action='new_event_submit/' method='post'>
+    {% csrf_token %}
+    <div class='form-group'>
+        <label for='event'>Event:</label>
+        <select id='event' class='form-control'>
+            <option value='0'> -- </option>
+            {% for event in events %}
+                <option value='{{ event.id }}'>{{ event.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div id='edit_event_info'>
+
+    </div>
+</form>
+<script>
+$('#event').on('change', function() {
+    var event_id = $('#event').val();
+    $.post('get_event_info/', {'event_id':event_id}, function(result) {
+        $('#edit_event_info').html(result);
+        $('#edit_event_info').slideDown();
+    })
+})
+</script>
