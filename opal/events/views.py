@@ -1,11 +1,13 @@
 import time
+import pprint
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from events.models import Event, Place, Scheduled_Event
+from events.models import Event, Place, Scheduled_Event, Checklist_Item
 
 # Create your views here.
+
 @login_required
 def index(request):
     data = {}
@@ -71,7 +73,6 @@ def schedule_event_submit(request):
     end_date = time.strftime('%Y-%m-%d', time.strptime(to_date, '%m/%d/%Y'))
 
     try:
-        # event =
         scheduled_event = Scheduled_Event(
             event_id=event,
             place_id=place,
@@ -127,9 +128,34 @@ def edit_events(request):
 def get_event_info(request):
     event_id = request.POST['event_id']
     event = Event.objects.get(pk=event_id)
+    all_checklist_items = Checklist_Item.objects.all()
+
 
     data = {}
     data['description'] = event.description
     data['price'] = event.price
+    data['event_id'] = event_id
+    data['checklist'] = all_checklist_items
 
     return render(request, 'events/edit_event_info.html', data)
+
+@login_required
+def new_checklist_item(request):
+    checklist_item = request.POST['checklist_item']
+
+    try:
+        item = Checklist_Item(
+            name=checklist_item
+        )
+        item.save()
+    except:
+        messages.error(request, "There was an error saving your checklist item")
+        return redirect('events:index')
+
+    return get_event_info(request)
+
+@login_required
+def edit_event_submit(request):
+    print(request.POST['checklist_items'])
+
+    return redirect('events:index')

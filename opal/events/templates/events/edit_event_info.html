@@ -10,11 +10,18 @@
 <div class='form-group checklist_items'>
     <i id='add_check_button' class='fa fa-plus-square fa-lg' style='color: blue;'></i> Checklist Items: <br>
     <form id='new_checklist_form' action='new_checklist_item/' method='post'>
+        {% csrf_token %}
+        <input type='hidden' value='{{ event_id }}' name='event_id'b id='event_id'>
         <input type='text' name='checklist_item' class='form-control' id='new_check_item' placeholder="New Checklist Item"><i id='checklist_item_submit' class=' btn btn-primary fa fa-arrow-right fa-lg'></i>
-    <form>
+    </form>
+    {% for item in checklist %}
+        &nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' value='{{ item.id }}' id='item_{{ item.id }}' name='checklist_items'> <label for='item_{{ item.id }}'>{{ item.name }}</label><br>
+    {% endfor %}
 </div>
 <br>
 <input id='edit_submit' type='submit' value='Submit' class='btn btn-primary'>
+
+
 <script>
 $('#add_check_button').on('click', function(event) {
     if($('#new_checklist_form').css('display') == 'block')
@@ -28,6 +35,10 @@ $('#add_check_button').on('click', function(event) {
     }
 })
 $('#checklist_item_submit').on('click', function(event) {
-    $('#new_checklist_form').submit();
+    var checklist_item = $('#new_check_item').val();
+    var event_id = $('#event_id').val();
+    $.post('new_checklist_item/', {'checklist_item':checklist_item, 'event_id':event_id}, function(result) {
+        $('#edit_event_info').html(result);
+    });
 })
 </script>
