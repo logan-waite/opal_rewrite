@@ -156,6 +156,9 @@ def new_checklist_item(request):
 
 @login_required
 def edit_event_submit(request):
-    print(request.POST['checklist_items'])
+    checklist_items = request.POST.getlist('checklist_items')
+    event = request.POST['event']
+    description = request.POST['description']
+    price = request.POST['price']
 
     return redirect('events:index')
