@@ -1,5 +1,5 @@
 import time
-import pprint
+import sys
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -126,12 +126,16 @@ def edit_events(request):
 
 @login_required
 def get_event_info(request):
+    data = {}
+
     event_id = request.POST['event_id']
     event = Event.objects.get(pk=event_id)
     all_checklist_items = Checklist_Item.objects.all()
+    checked_checklist = []
+    for item in event.checklist_items.all():
+        checked_checklist.append(item)
+        data['checked_checklist'] = checked_checklist
 
-
-    data = {}
     data['description'] = event.description
     data['price'] = event.price
     data['event_id'] = event_id
@@ -156,9 +160,27 @@ def new_checklist_item(request):
 
 @login_required
 def edit_event_submit(request):
-    checklist_items = request.POST.getlist('checklist_items')
-    event = request.POST['event']
+    checked_checklist_items = request.POST.getlist('checklist_items')
+    event_id = request.POST['event']
     description = request.POST['description']
     price = request.POST['price']
+    try:
+        event = Event.objects.get(pk=event_id)
+        event.description = description
+        event.price = price
+
+        existing_checklist_items = event.checklist_items.all()
+        for checked in checked_checklist_items:
+            if checked in existing_checklist_items:
+                pass
+            elif checked not in existing_checklist_items:
+                event.checklist_items.add(checked)
+
+        event.save()
+
+        messages.success(request, "Event successfully changed")
+    except:
+        e = sys.exc_info()[0]
+        messages.error(request, "An error occurred: %s." % e)
 
     return redirect('events:index')

@@ -14,8 +14,13 @@
         <input type='hidden' value='{{ event_id }}' name='event_id'b id='event_id'>
         <input type='text' name='checklist_item' class='form-control' id='new_check_item' placeholder="New Checklist Item"><i id='checklist_item_submit' class=' btn btn-primary fa fa-arrow-right fa-lg'></i>
     </form>
+    
     {% for item in checklist %}
-        &nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' value='{{ item.id }}' id='item_{{ item.id }}' name='checklist_items'> <label for='item_{{ item.id }}'>{{ item.name }}</label><br>
+        {% if item in checked_checklist %}
+            &nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' value='{{ item.id }}' id='item_{{ item.id }}' name='checklist_items' checked> <label for='item_{{ item.id }}'>{{ item.name }}</label><br>
+        {% else %}
+            &nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' value='{{ item.id }}' id='item_{{ item.id }}' name='checklist_items'> <label for='item_{{ item.id }}'>{{ item.name }}</label><br>
+        {% endif %}
     {% endfor %}
 </div>
 <br>

@@ -3,7 +3,7 @@
     {% csrf_token %}
     <div class='form-group'>
         <label for='event'>Event:</label>
-        <select id='event' class='form-control'>
+        <select id='event' name='event' class='form-control'>
             <option value='0'> -- </option>
             {% for event in events %}
                 <option value='{{ event.id }}'>{{ event.name }}</option>
