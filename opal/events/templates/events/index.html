@@ -4,9 +4,6 @@
 {% block title %}Events | {% endblock %} <!-- Products? -->
 
 {% block sidebar %}
-{% for things in something %}
-    {{ things }}
-{% endfor %}
 <div>
     <ul class="list-group">
         <li class='list-group-item'>
@@ -35,7 +32,9 @@
                 <br>
                 <img src='{% static "events/images/incomplete.png" %}' class='check-img'/> Checklist <i class='fa fa-caret-down'></i>
                 <ul>
-                    <li><input type='checkbox' id='checklist-item'> <label for='checklist-item'>Check 1</label></li>
+                    {% for item in event.items %}
+                        <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' name='checklist-item_{{ item.id }}'> <label for='checklist-item_{{ item.id }}'>{{ item }}</label></li>
+                    {% endfor %}
                 </ul>
                 <hr>
                 <a>Person Client</a> <br>

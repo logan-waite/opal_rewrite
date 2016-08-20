@@ -1,4 +1,8 @@
 <div class='form-group'>
+    <label for='event_name'>Event Name:</label>
+    <input type='text' id='event_name' class='form-control' name='name' placeholder='Name' value='{{ name }}'>
+</div>
+<div class='form-group'>
     <label for='event_description'>Description of Event:</label>
     <input type='text' id='event_description' class='form-control' name='description' placeholder='Description' value='{{ description }}'>
 </div>
@@ -8,13 +12,13 @@
 </div>
 
 <div class='form-group checklist_items'>
-    <i id='add_check_button' class='fa fa-plus-square fa-lg' style='color: blue;'></i> Checklist Items: <br>
+    <i id='add_check_button' class='fa fa-plus-square fa-lg clickable' style='color: blue;'></i> Checklist Items: <br>
     <form id='new_checklist_form' action='new_checklist_item/' method='post'>
         {% csrf_token %}
         <input type='hidden' value='{{ event_id }}' name='event_id'b id='event_id'>
         <input type='text' name='checklist_item' class='form-control' id='new_check_item' placeholder="New Checklist Item"><i id='checklist_item_submit' class=' btn btn-primary fa fa-arrow-right fa-lg'></i>
     </form>
-    
+
     {% for item in checklist %}
         {% if item in checked_checklist %}
             &nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' value='{{ item.id }}' id='item_{{ item.id }}' name='checklist_items' checked> <label for='item_{{ item.id }}'>{{ item.name }}</label><br>

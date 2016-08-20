@@ -4,7 +4,7 @@ import sys
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from events.models import Event, Place, Scheduled_Event, Checklist_Item
+from events.models import Event, Place, Scheduled_Event, Checklist_Item, Scheduled_Event_Checklist
 
 # Create your views here.
 
@@ -25,6 +25,9 @@ def index(request):
         end_date = time.strftime('%m/%d', time.strptime(end[0], '%Y-%m-%d'))
         event.end = end_date
 
+        # get checklist items for scheduled event
+        checklist_items = Scheduled_Event_Checklist.objects.all().filter(scheduled_event=event.id)
+        event.items = checklist_items
 
     data['events'] = scheduled_events
 
@@ -32,10 +35,15 @@ def index(request):
 
 @login_required
 def new_event_form(request):
-    return render(request, 'events/new_event_form.html')
+    data = {}
+    all_checklist_items = Checklist_Item.objects.all()
+    data['checklist'] = all_checklist_items
+
+    return render(request, 'events/new_event_form.html', data)
 
 @login_required
 def new_event_submit(request):
+    checked_checklist_items = request.POST.getlist('checklist_items')
     name = request.POST['name']
     description = request.POST['description']
     price = request.POST['price']
@@ -46,11 +54,17 @@ def new_event_submit(request):
             description=description,
             price=price
         )
+
         event.save()
+
+        for item in checked_checklist_items:
+            event.checklist_items.add(item)
 
         messages.success(request, "Your event was saved successfully.")
     except:
+        e = sys.exc_info()[0]
         messages.error(request, "There was an error saving your event.")
+        print(e)
 
     return redirect('events:index')
 
@@ -64,17 +78,18 @@ def schedule_event_form(request):
 
 @login_required
 def schedule_event_submit(request):
-    event = request.POST['event']
+    event_id = request.POST['event']
     place = request.POST['place']
     from_date = request.POST['from']
     to_date = request.POST['to']
 
+    # format date strings for database
     start_date = time.strftime('%Y-%m-%d', time.strptime(from_date, '%m/%d/%Y'))
     end_date = time.strftime('%Y-%m-%d', time.strptime(to_date, '%m/%d/%Y'))
 
     try:
         scheduled_event = Scheduled_Event(
-            event_id=event,
+            event_id=event_id,
             place_id=place,
             start=start_date,
             end=end_date
@@ -82,8 +97,22 @@ def schedule_event_submit(request):
 
         scheduled_event.save()
 
+        # set up checklist items for checking off.
+        event = Event.objects.get(pk=event_id)
+        checklist_items = event.checklist_items.all()
+        print(checklist_items)
+        for item in checklist_items:
+            scheduled_checklist = Scheduled_Event_Checklist (
+                scheduled_event = scheduled_event,
+                checklist_item = item,
+                completed = 0
+            )
+            scheduled_checklist.save()
+
         messages.success(request, 'Your event was sucessfully scheduled.')
     except:
+        e = sys.exc_info()
+        print(e)
         messages.error(request, 'Unable to schedule your event.')
     return redirect('events:index')
 
@@ -136,6 +165,7 @@ def get_event_info(request):
         checked_checklist.append(item)
         data['checked_checklist'] = checked_checklist
 
+    data['name'] = event.name
     data['description'] = event.description
     data['price'] = event.price
     data['event_id'] = event_id
@@ -156,7 +186,10 @@ def new_checklist_item(request):
         messages.error(request, "There was an error saving your checklist item")
         return redirect('events:index')
 
-    return get_event_info(request)
+    if request.POST['event_id'] == 'new':
+        return new_event_form(request)
+    else:
+        return get_event_info(request)
 
 @login_required
 def edit_event_submit(request):
@@ -164,23 +197,23 @@ def edit_event_submit(request):
     event_id = request.POST['event']
     description = request.POST['description']
     price = request.POST['price']
+    name = request.POST['name']
     try:
         event = Event.objects.get(pk=event_id)
         event.description = description
         event.price = price
+        event.name = name
 
-        existing_checklist_items = event.checklist_items.all()
-        for checked in checked_checklist_items:
-            if checked in existing_checklist_items:
-                pass
-            elif checked not in existing_checklist_items:
-                event.checklist_items.add(checked)
+        event.checklist_items.clear()
+        for item in checked_checklist_items:
+            event.checklist_items.add(item)
 
         event.save()
 
         messages.success(request, "Event successfully changed")
     except:
         e = sys.exc_info()[0]
-        messages.error(request, "An error occurred: %s." % e)
+        print(e)
+        messages.error(request, "An error occurred when editing your event")
 
     return redirect('events:index')

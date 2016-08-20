@@ -7,7 +7,7 @@ class Checklist_Item(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 # Table for individual events
 class Event(models.Model):
@@ -50,7 +50,7 @@ class Scheduled_Event_Checklist(models.Model):
     completed = models.BooleanField()
 
     def __str__(self):
-        return self.checklist_item
+        return str(self.checklist_item)
 
 # The checklists for each individual event.
 class Event_Checklist(models.Model):

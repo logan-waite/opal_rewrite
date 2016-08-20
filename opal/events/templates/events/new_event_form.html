@@ -13,6 +13,39 @@
         <label for='event_price'>Price (In Dollars):</label>
         <input type='number' id='event_price' class='form-control' name='price' placeholder='Price'>
     </div>
+    <div class='form-group checklist_items'>
+        <i id='add_check_button' class='fa fa-plus-square fa-lg clickable' style='color: blue;'></i> Checklist Items: <br>
+        <div id='new_checklist_form'>
+            <input type='text' name='checklist_item' form='new_checklist_form' class='form-control' id='new_check_item' placeholder="New Checklist Item"><i id='checklist_item_submit' class=' btn btn-primary fa fa-arrow-right fa-lg'></i>
+        </div>
+
+        {% for item in checklist %}
+            &nbsp;&nbsp;&nbsp;&nbsp; <input type='checkbox' value='{{ item.id }}' id='item_{{ item.id }}' name='checklist_items'> <label for='item_{{ item.id }}'>{{ item.name }}</label><br>
+        {% endfor %}
+    </div>
     <br>
     <input type='submit' value='Submit' class='btn btn-primary'>
 </form>
+<form action='new_checklist_item/' method='post'>
+    {% csrf_token %}
+</form>
+<script>
+$('#add_check_button').on('click', function(event) {
+    if($('#new_checklist_form').css('display') == 'block')
+    {
+        $('#new_checklist_form').slideUp();
+        $('#edit_submit').removeClass('disabled');
+    }
+    else {
+        $('#new_checklist_form').slideDown();
+        $('#edit_submit').addClass('disabled');
+    }
+})
+$('#checklist_item_submit').on('click', function(event) {
+    var checklist_item = $('#new_check_item').val();
+    var event_id = $('#event_id').val();
+    $.post('new_checklist_item/', {'checklist_item':checklist_item, 'event_id':'new'}, function(result) {
+        $('#facebox-content').html(result);
+    });
+})
+</script>
