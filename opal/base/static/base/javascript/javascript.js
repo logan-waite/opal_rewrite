@@ -109,6 +109,20 @@ $(document).ready(function() {
         load_facebox('edit_events');
     })
 
+    // Check of checklist items
+    $('.event-block input[type="checkbox"]').click(function() {
+        if ($(this).is(':checked')) {
+            var checked = 1;
+        }
+        else {
+            var checked = 0;
+        }
+        var value = $(this).val();
+        $.post('save_item_status/', {'checked':checked, 'item_id':value}, function(result) {
+            console.log(result);
+        })
+    })
+
     /***********/
     /* FACEBOX */
     /***********/

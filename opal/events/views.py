@@ -3,6 +3,7 @@ import sys
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.contrib import messages
 from events.models import Event, Place, Scheduled_Event, Checklist_Item, Scheduled_Event_Checklist
 
@@ -217,3 +218,23 @@ def edit_event_submit(request):
         messages.error(request, "An error occurred when editing your event")
 
     return redirect('events:index')
+
+@login_required
+def save_item_status(request):
+    checked = request.POST['checked']
+    item_id = request.POST['item_id']
+    if(checked == '1'):
+        completed = True
+    else:
+        completed = False
+
+    try:
+        checklist_item = Scheduled_Event_Checklist.objects.get(pk=item_id)
+        checklist_item.completed = completed
+
+        checklist_item.save()
+    except:
+        e = sys.exc_info()
+        print(e)
+
+    return HttpResponse("hello")

@@ -22,7 +22,7 @@
 <div id='main' class='col-sm-12'>
 
     {% for event in events %}
-    <div class='col-sm-3 event-block'>
+    <div class='col-sm-4 col-md-3 event-block'>
         <div class='panel panel-default'>
             <div class='panel-heading'>
                 <h1 class='panel-title text-center'>{{ event.event }}<br>{{ event.start }} - {{ event.end }}</h1>
@@ -33,7 +33,12 @@
                 <img src='{% static "events/images/incomplete.png" %}' class='check-img'/> Checklist <i class='fa fa-caret-down'></i>
                 <ul>
                     {% for item in event.items %}
-                        <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' name='checklist-item_{{ item.id }}'> <label for='checklist-item_{{ item.id }}'>{{ item }}</label></li>
+                        {% if item.completed %}
+                            <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' value='{{ item.id }}' name='checklist-item_{{ item.id }}' checked>
+                        {% else %}
+                            <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' value='{{ item.id }}' name='checklist-item_{{ item.id }}'>
+                        {% endif %}
+                            <label for='checklist-item_{{ item.id }}'>{{ item }}</label></li>
                     {% endfor %}
                 </ul>
                 <hr>
