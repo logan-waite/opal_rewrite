@@ -30,6 +30,12 @@ def index(request):
         checklist_items = Scheduled_Event_Checklist.objects.all().filter(scheduled_event=event.id)
         event.items = checklist_items
 
+        completed = True     # Assume true until proven wrong
+        for item in checklist_items:
+            if not item.completed:
+                completed = False
+
+        event.completed = completed
     data['events'] = scheduled_events
 
     return render(request, 'events/index.html', data)
@@ -211,9 +217,38 @@ def edit_event_submit(request):
 
         event.save()
 
+        # Get scheduled event to update their checklist items
+        scheduled_events = Scheduled_Event.objects.filter(event=event).all()
+        for event in scheduled_events:
+            scheduled_event_checklist = Scheduled_Event_Checklist.objects.filter(scheduled_event=event).all()
+            checklist = {}
+            for item in scheduled_event_checklist:
+                # Save old checklist
+                checklist[item.checklist_item.name] = item.completed
+                item.delete()
+            # Create new checklist items
+            for item in checked_checklist_items:
+                checklist_item = Checklist_Item.objects.get(pk=item)
+                print(checklist)
+                print(checklist_item.name)
+                if checklist_item.name in checklist:
+                    completed = checklist[checklist_item.name]
+                    # if checklist[checklist_item.name] == True:
+                    #     completed = 1
+                    # else:
+                    #     completed = 0
+                else:
+                    completed = 0
+
+                scheduled_checklist = Scheduled_Event_Checklist (
+                    scheduled_event = event,
+                    checklist_item = checklist_item,
+                    completed = completed
+                )
+                scheduled_checklist.save()
         messages.success(request, "Event successfully changed")
     except:
-        e = sys.exc_info()[0]
+        e = sys.exc_info()
         print(e)
         messages.error(request, "An error occurred when editing your event")
 
@@ -233,8 +268,19 @@ def save_item_status(request):
         checklist_item.completed = completed
 
         checklist_item.save()
+
+        # Check if entire checklist is complete
+        checklist = Scheduled_Event_Checklist.objects.filter(scheduled_event=checklist_item.scheduled_event)
+        completed = True     # Assume true until proven wrong
+        for item in checklist:
+            if not item.completed:
+                completed = False
+        if (completed):
+            return HttpResponse("complete")
+        else:
+            return HttpResponse("incomplete")
     except:
         e = sys.exc_info()
         print(e)
 
-    return HttpResponse("hello")
+        return HttpResponse(e)

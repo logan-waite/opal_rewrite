@@ -109,7 +109,7 @@ $(document).ready(function() {
         load_facebox('edit_events');
     })
 
-    // Check of checklist items
+    // Check off checklist items
     $('.event-block input[type="checkbox"]').click(function() {
         if ($(this).is(':checked')) {
             var checked = 1;
@@ -118,9 +118,33 @@ $(document).ready(function() {
             var checked = 0;
         }
         var value = $(this).val();
+        var image = $(this).closest('ul').siblings('img')
+
         $.post('save_item_status/', {'checked':checked, 'item_id':value}, function(result) {
-            console.log(result);
+            console.log(result)
+            if(result == 'complete') {
+                image.attr('src', '/static/events/images/complete.png')
+            }
+            else {
+                image.attr('src', '/static/events/images/incomplete.png')
+            }
         })
+    })
+
+    $('.checklist-dropdown').click(function() {
+        var checklist = $(this).siblings('ul')
+        var caret = $(this).children('i')
+        console.log(caret)
+        if (checklist.css('display') == 'none') {
+            checklist.slideDown()
+            caret.removeClass('rotate-to-90')
+            caret.addClass('rotate-to-0')
+        }
+        else {
+            checklist.slideUp()
+            caret.removeClass('rotate-to-0')
+            caret.addClass('rotate-to-90')
+        }
     })
 
     /***********/

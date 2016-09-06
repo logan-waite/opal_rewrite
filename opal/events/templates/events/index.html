@@ -28,10 +28,15 @@
                 <h1 class='panel-title text-center'>{{ event.event }}<br>{{ event.start }} - {{ event.end }}</h1>
             </div>
             <div class='panel-body'>
-                {{ event.place }}
+                <strong>{{ event.place }}</strong>
                 <br>
-                <img src='{% static "events/images/incomplete.png" %}' class='check-img'/> Checklist <i class='fa fa-caret-down'></i>
-                <ul>
+                {% if event.completed %}
+                    <img src='{% static "events/images/complete.png" %}' class='check-img'/>
+                {% else %}
+                    <img src='{% static "events/images/incomplete.png" %}' class='check-img'/>
+                {% endif %}
+                <span class='checklist-dropdown'>Checklist &nbsp;<i class='fa fa-caret-left'></i></span>
+                <ul class='checklist'>
                     {% for item in event.items %}
                         {% if item.completed %}
                             <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' value='{{ item.id }}' name='checklist-item_{{ item.id }}' checked>

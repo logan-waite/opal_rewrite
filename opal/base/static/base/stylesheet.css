@@ -61,6 +61,7 @@ header {
 .no_bullet {
     list-style-type: none;
 }
+
 /********************/
 /****** Sidebar *****/
 /********************/
@@ -329,6 +330,27 @@ a {
 .check-img {
     height: 12px;
 }
+
+.checklist {
+    display: none;
+}
+
+.checklist-dropdown {
+    cursor: pointer;
+}
+
+.rotate-to-0 {
+    transition: .4s linear;
+    transform: rotate(-90deg);
+}
+
+.rotate-to-90 {
+    transition: .4s linear;
+    transform: rotate(0deg);
+}
+
+
+
 
 /********************/
 /****** Alerts ******/
