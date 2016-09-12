@@ -57,6 +57,11 @@ $(document).ready(function() {
         load_facebox('add_client');
     })
 
+    // "Edit Information" Facebox
+    $('#edit_client').click(function() {
+        load_facebox('edit_client');
+    })
+
     // Sort buttons
     $('#az').click(function(event) {
         selected_id = $(".active").val();
@@ -152,12 +157,6 @@ $(document).ready(function() {
     /***********/
 
     // Facebox
-    function load_facebox(url) {
-        $('#facebox-content').load(url)
-        $('#facebox-back').css('display', 'block')
-        $('#facebox').css('display', 'block')
-    }
-
     $('#facebox-close').click(function() {
         $('#facebox-back').css('display', 'none')
         $('#facebox').css('display', 'none')
@@ -170,7 +169,13 @@ $(document).ready(function() {
         $('#facebox-content').html("")
     })
     // Test facebox views
-
-    //$('#facebox-content').load('add_client')
+    // $('#facebox-back').css('display', 'block')
+    // $('#facebox').css('display', 'block')
+    // $('#facebox-content').load('edit_client')
 
 });
+function load_facebox(url, data = null) {
+    $('#facebox-content').load(url, data)
+    $('#facebox-back').css('display', 'block')
+    $('#facebox').css('display', 'block')
+}

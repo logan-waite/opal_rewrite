@@ -233,10 +233,6 @@ def edit_event_submit(request):
                 print(checklist_item.name)
                 if checklist_item.name in checklist:
                     completed = checklist[checklist_item.name]
-                    # if checklist[checklist_item.name] == True:
-                    #     completed = 1
-                    # else:
-                    #     completed = 0
                 else:
                     completed = 0
 

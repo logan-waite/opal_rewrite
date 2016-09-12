@@ -1,9 +1,9 @@
 <div class='well'>
     <div class='nav navbar'>
-        <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Information</button>
-        <button class='btn btn-primary'><i class='fa fa-envelope-o fa-lg'></i> New Email</button>
-        <button class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Product</button>
-        <button class='btn btn-danger float-right'><i class='fa fa-minus fa-lg'></i> Delete Client</button>
+        <button id='edit_client' class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Information</button>
+        <button class='btn btn-primary disabled'><i class='fa fa-envelope-o fa-lg'></i> New Email</button>
+        <button class='btn btn-primary disabled'><i class='fa fa-plus fa-lg'></i> Add Product</button>
+        <button class='btn btn-danger float-right disabled'><i class='fa fa-trash fa-lg'></i> Delete Client</button>
     </div>
     <!-- Client Information -->
     <div class='panel panel-info'>
@@ -109,8 +109,8 @@
                 <div class='panel-body'>
                     A comment would be in something like this.
                     <hr>
-                    <i class='fa fa-pencil-square fa-lg'></i>
-                    <i class='fa fa-minus-square fa-lg'></i>
+                    <i class='fa fa-pencil-square-o fa-lg'></i>
+                    <i class='fa fa-trash-o fa-lg'></i>
                      <span class='float-right'>~ User Name, 01/01/2016</span>
                 </div>
             </div>
@@ -163,4 +163,12 @@
         </div>
     </div>
 </div>
-<input type='hidden' value='{{ client_id }}'>
+<input type='hidden' value='{{ client_id }}' id='client_id'>
+<script>
+// "Edit Information" Facebox
+$('#edit_client').click(function() {
+    client_id = $('#client_id').val();
+    data = {'client':client_id}
+    load_facebox('edit_client/', data);
+})
+</script>

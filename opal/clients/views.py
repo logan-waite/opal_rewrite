@@ -53,7 +53,7 @@ def add_client(request):
     return render(request, 'clients/add_client.html')
 
 @login_required
-def client_info(request):
+def client_info(request, get_data = False):
     try:
         client_id = request.POST['client']
         client = Client.objects.get(pk=client_id)
@@ -75,6 +75,9 @@ def client_info(request):
         data['city'] = client.city
         data['state'] = client.state
         data['zip'] = client.zipcode
+
+        if get_data:
+            return data
 
         return render(request, "clients/client_info.html", data)
     except:
@@ -125,3 +128,8 @@ def add_client_submit(request):
         messages.error(request, "There was an error saving your client.")
 
     return redirect('clients:index')
+
+@login_required
+def edit_client(request):
+    data = client_info(request, True)
+    return render(request, 'clients/edit_client.html', data)
