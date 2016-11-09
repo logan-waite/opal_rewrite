@@ -11,19 +11,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from oauth2client.contrib import xsrfutil
 from oauth2client.client import flow_from_clientsecrets
-from oauth2client.contrib.django_orm import Storage
+# from oauth2client.contrib.django_orm import Storage
 from opal import settings
 
-from .models import User, CredentialsModel
+# from .models import User, CredentialsModel
 
 # Google API stuff
-CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secrets.json')
-
-FLOW = flow_from_clientsecrets(
-    CLIENT_SECRETS,
-    scope='https://www.googleapis.com/auth/calendar https://mail.google.com',
-    redirect_uri='http://127.0.0.1:8080/login/oauth2callback'
-    )
+# CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secrets.json')
+#
+# FLOW = flow_from_clientsecrets(
+#     CLIENT_SECRETS,
+#     scope='https://www.googleapis.com/auth/calendar https://mail.google.com',
+#     redirect_uri='http://127.0.0.1:8080/login/oauth2callback'
+#     )
 
 # ----------------------------------------------------------------------------
 # If a user changes their mind, but is already logged in.

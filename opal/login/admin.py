@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import CredentialsModel, FlowModel
+# from .models import CredentialsModel, FlowModel
 # Register your models here.
-class CredentialsAdmin(admin.ModelAdmin):
-    pass
+# class CredentialsAdmin(admin.ModelAdmin):
+    # pass
 
-    
-admin.site.register(CredentialsModel)
+
+# admin.site.register(CredentialsModel)
