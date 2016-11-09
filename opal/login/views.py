@@ -11,25 +11,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from oauth2client.contrib import xsrfutil
 from oauth2client.client import flow_from_clientsecrets
-# from oauth2client.contrib.django_orm import Storage
+
+from oauth2client.contrib.django_util.storage import DjangoORMStorage
+
 from opal import settings
 
-# from .models import User, CredentialsModel
+from .models import User, CredentialsModel
 
 # Google API stuff
-# CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secrets.json')
-#
-# FLOW = flow_from_clientsecrets(
-#     CLIENT_SECRETS,
-#     scope='https://www.googleapis.com/auth/calendar https://mail.google.com',
-#     redirect_uri='http://127.0.0.1:8080/login/oauth2callback'
-#     )
+CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secrets.json')
+
+FLOW = flow_from_clientsecrets(
+    CLIENT_SECRETS,
+    scope='https://www.googleapis.com/auth/calendar https://mail.google.com',
+    redirect_uri='http://127.0.0.1:8080/login/oauth2callback'
+    )
 
 # ----------------------------------------------------------------------------
 # If a user changes their mind, but is already logged in.
 @python_2_unicode_compatible
 def google_sign_in(request):
-    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+    storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
     credential = storage.get()
     if credential is None or credential.invalid == True:
         FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
@@ -53,7 +55,7 @@ def auth_return(request):
     except:
         return render(request, 'login/denied_access.html')
     else:
-        storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+        storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
         storage.put(credential)
         return redirect("tasks:index")
 # ----------------------------------------------------------------------------
@@ -74,7 +76,7 @@ def sign_in(request):
             first_name = User.objects.get(username=username).first_name
 
             # Google sign_in code
-            storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+            storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
             credential = storage.get()
             if credential is None or credential.invalid == True:
                 FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
@@ -116,6 +118,7 @@ def create_user(request):
         new_user.last_name = last_name
         new_user.save()
     except Exception as e:
+        print(e)
         if str(e).find('username'):
             messages.error(request, "That username is already in use")
         return redirect('login:new_user')
@@ -125,7 +128,7 @@ def create_user(request):
     login(request, user)
 
     # Google sign-in code
-    storage = Storage(CredentialsModel, 'id', request.user, 'credential')
+    storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
     credential = storage.get()
     if credential is None or credential.invalid == True:
         FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,

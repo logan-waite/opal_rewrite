@@ -131,5 +131,5 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
 
 # Google API file constants
-# GOOGLE_OAUTH2_CLIENT_ID = "194910930180-7j2q772ovj0a3dtakb6g66a8qcrs80pr.apps.googleusercontent.com"
-# GOOGLE_OAUTH2_CLIENT_SECRET = "4GxpIs5_-Nv5EpVbzm_JUivy"
+GOOGLE_OAUTH2_CLIENT_ID = "194910930180-7j2q772ovj0a3dtakb6g66a8qcrs80pr.apps.googleusercontent.com"
+GOOGLE_OAUTH2_CLIENT_SECRET = "4GxpIs5_-Nv5EpVbzm_JUivy"
