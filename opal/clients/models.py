@@ -1,5 +1,5 @@
 from django.db import models
-from events.models import Event
+from events.models import Scheduled_Event
 
 # Create your models here.
 class Client(models.Model):
@@ -9,7 +9,7 @@ class Client(models.Model):
     city = models.CharField(max_length=20, null=True, blank=True)
     state = models.CharField(max_length=2, null=True, blank=True)
     zipcode = models.CharField(max_length=5, null=True, blank=True)
-    events = models.ManyToManyField(Event, blank=True)
+    events = models.ManyToManyField(Scheduled_Event, blank=True)
 
     def __str__(self):
         return self.first_name + " " + self.last_name

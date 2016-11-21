@@ -57,11 +57,6 @@ $(document).ready(function() {
         load_facebox('add_client');
     })
 
-    // "Edit Information" Facebox
-    $('#edit_client').click(function() {
-        load_facebox('edit_client');
-    })
-
     // Sort buttons
     $('#az').click(function(event) {
         selected_id = $(".active").val();

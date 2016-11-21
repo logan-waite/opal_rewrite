@@ -1,11 +1,13 @@
 import struct
+import sys
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib import messages
 from clients.models import Client, Email, Phone
+from events.models import Scheduled_Event
 
-# Create your views here.
 @login_required
 def index(request):
     data = {}
@@ -133,3 +135,62 @@ def add_client_submit(request):
 def edit_client(request):
     data = client_info(request, True)
     return render(request, 'clients/edit_client.html', data)
+
+def edit_client_submit(request):
+    full_name = request.POST['full_name'].split(" ")
+    last_name = full_name[-1]
+    first_name = " ".join(full_name[0:-1])
+    email = request.POST['email']
+    phone = request.POST['phone']
+    address = request.POST['address']
+    city = request.POST['city']
+    state = request.POST['state']
+    zip_code = request.POST['zip']
+    client_id = request.POST['client_id']
+
+    try:
+        client = Client.objects.get(pk=client_id)
+        client.first_name = first_name
+        client.last_name = last_name
+        client.email = email
+        client.phone = phone
+        client.street_address = address
+        client.city = city
+        client.state = state
+        client.zipcode = zip_code
+
+        client.save();
+        messages.success(request, "Client successfully updated")
+    except:
+        e = sys.exc_info()
+        print(e)
+        messages.error(request, "An error occurred when editing %s" % full_name)
+
+    return redirect('clients:index')
+
+def get_scheduled_events():
+    events = Scheduled_Event.objects.all()
+    return events;
+
+@login_required
+def add_product(request):
+    data = client_info(request, True)
+    events = get_scheduled_events()
+    data['events'] = events
+    return render(request, 'clients/add_product.html', data)
+
+def add_product_submit(request):
+    client_id = request.POST['client_id']
+    product_id = request.POST.get('product_id', '')
+    event_id = request.POST.get('event_id', '')
+
+    client = Client.objects.get(pk=client_id)
+    event = Scheduled_Event.objects.get(pk=event_id)
+
+    if event is not '':
+        print(event)
+        client.events.add(event)
+
+        client.save()
+
+    return redirect('clients:index')

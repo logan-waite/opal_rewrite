@@ -1,0 +1,14 @@
+<h2>Add Product for {{ full_name }}</h2>
+<form action='add_product_submit/' method='post'>
+    {% csrf_token %}
+    <input type='hidden' name='client_id' value="{{ client_id }}"
+    <div class='form-group'>
+        <label for="event-select">Event: </label>
+        <select id='event-select' class='form-control' name='event_id'>
+            {% for event in events %}
+                <option value="{{ event.id }}"> {{ event }}
+            {% endfor %}
+        </select>
+    </div>
+    <button type='submit' class='btn btn-primary'> Submit </button>
+</form>

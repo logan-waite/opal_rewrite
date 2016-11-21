@@ -213,6 +213,7 @@ def edit_event_submit(request):
 
         event.checklist_items.clear()
         for item in checked_checklist_items:
+            print(item)
             event.checklist_items.add(item)
 
         event.save()
