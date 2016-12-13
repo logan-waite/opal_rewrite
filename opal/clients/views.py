@@ -45,7 +45,7 @@ def get_clients(request):
 def client_list_html(client):
     html = ""
     for key, value in client.items():
-        html += "<li class='list-group-item' value='%s'>" % (value.id)
+        html += "<li class='item' value='%s'>" % (value.id)
         html += "%s %s" % (value.first_name, value.last_name)
         html += "</li>"
     return html

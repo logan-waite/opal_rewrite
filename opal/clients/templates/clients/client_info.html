@@ -1,57 +1,55 @@
-<div class='well'>
+<div class='nav-tabs-custom'>
+    <ul class='nav nav-tabs'>
+        <li class='active'>
+            <a href="#info" data-toggle="tab">{{ full_name }}'s Info</a>
+        </li>
+        <li>
+            <a href="#purchases" data-toggle="tab">Purchases</a>
+        </li>
+        <li>
+            <a href="#activity" data-toggle="tab">Activity</a>
+        </li>
+    </ul>
+    {% comment %}
     <div class='nav navbar'>
         <button id='edit_client' class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Information</button>
         <button id='add_product' class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Product</button>
         <button class='btn btn-primary disabled'><i class='fa fa-envelope-o fa-lg'></i> New Email</button>
         <button class='btn btn-danger float-right disabled'><i class='fa fa-trash fa-lg'></i> Delete Client</button>
     </div>
+    {% endcomment %}
     <!-- Client Information -->
-    <div class='panel panel-info'>
-        <div class='panel-heading'>
-            <h5 class='panel-title'> {{ full_name }} </h5>
-        </div>
-        <div class='panel-body'>
-            <div id='email-list' class='list-group'>
-                <div class='list-group-item'>
-                    <strong>Email Addresses</strong>
-                </div>
+    <div class='tab-content'>
+        <div class='active tab-pane' id='info'>
+            <div id='email-list' class='col-sm-4'>
+                <h4> Email </h4>
                 {% for email in emails %}
-                <div class='list-group-item'>
                     {{ email }}
-                </div>
+                    <br>
                 {% endfor %}
             </div>
-            <div id='phone-list' class='list-group'>
-                <div class='list-group-item'>
-                    <strong>Phone Numbers</strong>
-                </div>
+            <div id='phone-list' class='col-sm-4'>
+                <h4> Phone Number </h4>
                 {% for phone in phone_numbers %}
-                    <div class='list-group-item'>
                         {{ phone }}
-                    </div>
+                        <br>
                 {% endfor %}
             </div>
-            <div id='address-list' class='list-group'>
-                <div class='list-group-item'>
-                    <strong>Address</strong>
-                </div>
+            <div id='address-list' class='col-sm-4'>
+                <h4> Address </h4>
                 {% if address %}
-                <div class='list-group-item'>
+                <address>
                     {{ address }} <br>
                     {{ city }}
                     {{ state }}
                     {{ zip }}
-                </div>
+                    </address
+                <br>
                 {% endif %}
             </div>
+            <div class='clearfix'></div>
         </div>
-    </div>
-    <!-- Events Attended List -->
-    <div class='panel panel-info'>
-        <div class='panel-heading'>
-            <h1 class='panel-title'>Purchase History</h1>
-        </div>
-        <div class='panel-body'>
+        <div class='tab-pane' id='purchases'>
             <table class='table'>
                 <tr>
                     <th></th>
@@ -95,71 +93,45 @@
                 </tr>
             </table>
         </div>
-    </div>
-    <!-- Communication History -->
-    <div class='panel panel-info'>
-        <div class='panel-heading'>
-            <h1 class='panel-title'>Communicaton History</h1>
-        </div>
-        <div class='panel-body'>
-            <div class='panel panel-warning'>
-                <div class='panel-heading'>
-                    <h1 class='panel-title'>Comment</h1>
-                </div>
-                <div class='panel-body'>
-                    A comment would be in something like this.
-                    <hr>
-                    <i class='fa fa-pencil-square-o fa-lg'></i>
-                    <i class='fa fa-trash-o fa-lg'></i>
-                     <span class='float-right'>~ User Name, 01/01/2016</span>
+        <div class='tab-pane' id='activity'>
+            <div class='row'>
+                <div class='col-md-12'>
+                    <ul class='timeline'>
+                        <li class='time-label'>
+                            <span class='bg-red'>
+                                Nov 10, 2016
+                            </span>
+                        </li>
+                        <li>
+                            <i class='fa fa-comment bg-blue'></i>
+                            <div class='timeline-item'>
+                                <span class='time'><i class='fa fa-clock-o'></i> 12:05</span>
+                                <h3 class='timeline-header'> Joey left a comment </h3>
+                                <div class='timeline-body'>
+                                    This would be an example of a comment.
+                                </div>
+                                <div class='timeline-footer'>
+                                    <a class='btn btn-info btn-xs'>Edit</a>
+                                    <a class='btn btn-danger btn-xs'>Delete</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <i class='fa fa-envelope bg-green'></i>
+                            <div class='timeline-item'>
+                                <span class='time'><i class='fa fa-clock-o'></i> 3:00 PM</span>
+                                <h3 class='timeline-header'> You sent {{ full_name }} an email </h3>
+                                <div class='timeline-body'>
+                                    Hello, <br>
+                                    I am writing you an email.<br>
+                                    Sincerely, <br>
+                                    Jimmy
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class='panel panel-success'>
-                <div class='panel-heading'>
-                    <h2 class='panel-title'>Email (Email Subject)</h2>
-                </div>
-                <div class='panel-body'>
-                    Jimmy - <br>
-                    This is what an email to a client would look like.<br>
-                    Sincerely, <br><br>
-                    Joey
-                    <hr>
-                    <span class='float-right'>~ User Name, 02/13/26</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- New Email/Comment Form -->
-    <div class='panel panel-info'>
-        <div class='panel-heading'>
-            <h1 class='panel-title'>New Email/Comment</h1>
-        </div>
-        <div class='panel-body'>
-            <ul class='nav nav-pills'>
-                <li role='presentation' class='active'><a>Email</a></li>
-                <li role='presentation'><a>Comment</a></li>
-            </ul>
-            <br>
-            <form>
-                <div class='form-group'>
-                    <label for='email_address'>Address: </label>
-                    <select id='email_address' name='email_address' class='form-control'>
-                        <option value='0'>email1@gmail.com</option>
-                        <option value='2'>email2@email.net</option>
-                    </select>
-                </div>
-                <div class='form-group'>
-                    <label for='email_subject'>Subject: </label>
-                    <input type='text' id='email_subject' name='email_subject' class='form-control'>
-                </div>
-                <div class='form-group'>
-                    <label for='content'> Content: </label>
-                    <textarea id='content' name='content' class='form-control'></textarea>
-                </div>
-                <div class='form-group'>
-                    <input class='btn btn-primary' type='submit' value='Submit'>
-                </div>
-            </form>
         </div>
     </div>
 </div>
