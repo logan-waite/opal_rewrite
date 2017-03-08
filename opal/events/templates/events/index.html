@@ -4,58 +4,31 @@
 {% block title %}Events | {% endblock %} <!-- Products? -->
 
 {% block sidebar %}
-<div>
-    <ul class="list-group">
-        <li class='list-group-item'>
-            <button class='btn btn-primary' id='schedule_event'><i class='fa fa-calendar-check-o fa-lg'></i> Schedule Event</button>
-            <button class='btn btn-primary' id='add_event'><i class='fa fa-plus fa-lg'></i> New Event</button>
-            {# <button class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Package</button> #}
-            {# <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Packages</button> #}
-            <button class='btn btn-primary' id='edit_events'><i class='fa fa-pencil-square fa-lg'></i> Edit Events</button>
-            <button class='btn btn-primary disabled' id='edit_places'><i class='fa fa-pencil-square fa-lg'></i> Edit Places</button>
-        </li>
-    </ul>
+<div class="col-sm-3">
+    <div class="box box-default">
+        <ul class="list-group">
+            <li class='list-group-item'>
+                <button class='btn btn-primary btn-block' id='schedule_event'><i class='fa fa-calendar-check-o fa-lg'></i> Schedule Event</button>
+                <button class='btn btn-primary btn-block' id='add_event'><i class='fa fa-plus fa-lg'></i> New Event</button>
+                {# <button class='btn btn-primary'><i class='fa fa-plus fa-lg'></i> Add Package</button> #}
+                {# <button class='btn btn-primary'><i class='fa fa-pencil-square fa-lg'></i> Edit Packages</button> #}
+                <button class='btn btn-primary btn-block' id='edit_events'><i class='fa fa-pencil-square fa-lg'></i> Edit Events</button>
+                <button class='btn btn-primary btn-block disabled' id='edit_places'><i class='fa fa-pencil-square fa-lg'></i> Edit Places</button>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div id='main' class='col-sm-12'>
-
-    {% for event in events %}
-    <div class='col-sm-4 col-md-3 event-block'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-                <h1 class='panel-title text-center'>{{ event.event }}<br>{{ event.start }} - {{ event.end }}</h1>
-            </div>
-            <div class='panel-body'>
-                <strong>{{ event.place }}</strong>
-                <br>
-                {% if event.completed %}
-                    <img src='{% static "events/images/complete.png" %}' class='check-img'/>
-                {% else %}
-                    <img src='{% static "events/images/incomplete.png" %}' class='check-img'/>
-                {% endif %}
-                <span class='checklist-dropdown'>Checklist &nbsp;<i class='fa fa-caret-left'></i></span>
-                <ul class='checklist'>
-                    {% for item in event.items %}
-                        {% if item.completed %}
-                            <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' value='{{ item.id }}' name='checklist-item_{{ item.id }}' checked>
-                        {% else %}
-                            <li class='no_bullet'><input type='checkbox' id='checklist-item_{{ item.id }}' value='{{ item.id }}' name='checklist-item_{{ item.id }}'>
-                        {% endif %}
-                            <label for='checklist-item_{{ item.id }}'>{{ item }}</label></li>
-                    {% endfor %}
-                </ul>
-                <hr>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-                <a>Person Client</a> <br>
-            </div>
+<div id='main' class='col-sm-9'>
+    <div class="box box-primary">
+        <div id="calendar">
         </div>
     </div>
-    {% endfor %}
 </div>
+{% endblock %}
 
+{% block scripts %}
+    <script src="{% static 'events/javascript/events.js' %}"></script>
 {% endblock %}

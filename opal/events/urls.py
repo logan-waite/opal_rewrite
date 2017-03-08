@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'new_checklist_item/$', views.new_checklist_item, name='new_checklist_item'),
     url(r'edit_event_submit/$', views.edit_event_submit, name='edit_event_submit'),
     url(r'save_item_status/$', views.save_item_status, name='save_item_status'),
+    url(r'get_scheduled_events/$', views.get_scheduled_events, name='get_scheduled_events'),
 ]

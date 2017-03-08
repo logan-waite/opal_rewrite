@@ -1,9 +1,11 @@
 import time
+import datetime
 import sys
+import json
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from events.models import Event, Place, Scheduled_Event, Checklist_Item, Scheduled_Event_Checklist
 
@@ -276,6 +278,33 @@ def save_item_status(request):
             return HttpResponse("complete")
         else:
             return HttpResponse("incomplete")
+    except:
+        e = sys.exc_info()
+        print(e)
+
+        return HttpResponse(e)
+
+@login_required
+def get_scheduled_events(request):
+    start_date = request.GET["start"]
+    end_date = request.GET["end"]
+    print(start_date)
+    print(end_date)
+    try:
+        eventList = []
+
+        events = Scheduled_Event.objects.filter(start__range=[start_date, end_date])
+        print(events)
+        for event in events:
+            eventDict = {}
+            eventDict["title"] = event.event.name
+            eventDict["start"] = event.start
+            eventDict["end"] = event.end
+
+            print(eventDict)
+            eventList.append(eventDict)
+
+        return JsonResponse(eventList, safe=False)
     except:
         e = sys.exc_info()
         print(e)
