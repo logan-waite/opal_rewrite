@@ -9,7 +9,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
         <!-- Local Bootstrap/Jquery for working offline -->
         <!-- <link rel='stylesheet' type='text/css' href='{% static "base/bootstrap/css/bootstrap.css" %}'>
-<<<<<<< HEAD
        <script src='{% static "base/jquery-2.2.4.min.js" %}'></script>
        <script src="{% static 'base/bootstrap/js/bootstrap.js' %}"></script> -->
 
@@ -248,89 +247,6 @@ desired effect
       <div class="user-panel">
         <div class="pull-left image">
           <img src="{% static 'base/themes/AdminLTE-2.3.7/dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
-=======
-        <script src='{% static "base/jquery-2.2.4.min.js" %}'></script>
-        <script src="{% static 'base/bootstrap/js/bootstrap.js' %}"></script> -->
-
-        <!-- Latest compiled and minified Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <!-- Optional Bootstrap theme -->
-        {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> #}
-        <!-- Local stylesheet -->
-        <link rel='stylesheet' type='text/css' href='{% static 'base/stylesheet.css' %}'>
-        <!-- JQuery -->
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
-        <!-- JQuery UI -->
-        <script   src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="   crossorigin="anonymous"></script>
-        <!-- JQuery UI Cupertino Theme -->
-        <link rel='stylesheet' type='text/css' href="{% static 'base/javascript/jquery-ui-1.12.0/jquery-ui.min.css' %}"></script>
-        <link rel='stylesheet' type='text/css' href="{% static 'base/javascript/jquery-ui-1.12.0/jquery-ui.theme.min.css' %}"></script>
-        <!-- Latest compiled and minified Bootstrap JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <!-- Font Awesome JS -->
-        <script src="https://use.fontawesome.com/9fd33f348a.js"></script>
-        <!-- Local Javascript -->
-        <script src="{% static 'base/javascript/javascript.js' %}"></script>
-
-        <title>{% block title %}{% endblock %} OPAL</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="{% static 'base/images/OPAL_logo.png' %}">
-
-    </head>
-    <body>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#"><img src='{% static 'base/images/OPAL_logo.png' %}'></a> <!-- This will take us to the dashboard -->
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                {# <li id='tasks'><a href="{% url 'tasks:index' %}">Tasks</a></li>#}
-                <li id='clients'><a href="{% url 'clients:index' %}">Clients <span class="sr-only">(current)</span></a></li>
-                <li id='events'><a href="{% url 'events:index' %}">Events</a></li>
-                {# <li id='cal'><a href="{% url 'cal:index' %}">Calendar</a></li>#}
-                {# <li><a href="#">Finance</a></li>   //this is going to be a future feature      #}
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.first_name }} {{ request.user.last_name }}<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Account</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="{% url 'login:user_logout' %}">Logout</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-        <div id='messages'>
-            {# <div class='alert alert-success'>Some message here</div> #}
-            {# <div class='alert alert-success'>Another message here</div> #}
-            {% if messages %}
-                {% for message in messages %}
-                    <div{% if message.tags %} class="alert alert-{{ message.tags }} general-alert"{% endif %}>{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div id='page-body' class='container'>
-                {% block sidebar %}{% endblock %}
-                {% block content_title %}{% endblock %}
-                {% block content %}
-                {% endblock %}
-        </div> <!-- End .page-body -->
-        <div id='footer'>
-            <p> &copy; {% now "Y" %} Logan Waite. All Rights Reserved</p>
->>>>>>> master
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
