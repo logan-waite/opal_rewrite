@@ -1,63 +1,63 @@
 import os
 import logging
-import httplib2
+# import httplib2
 
 from django.utils.encoding import python_2_unicode_compatible
 from django.shortcuts import render, redirect
-from googleapiclient.discovery import build
+# from googleapiclient.discovery import build
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from oauth2client.contrib import xsrfutil
-from oauth2client.client import flow_from_clientsecrets
+# from oauth2client.contrib import xsrfutil
+# from oauth2client.client import flow_from_clientsecrets
 
-from oauth2client.contrib.django_util.storage import DjangoORMStorage
+# from oauth2client.contrib.django_util.storage import DjangoORMStorage
 
 from opal import settings
 
-from .models import User, CredentialsModel
+from .models import User #, CredentialsModel
 
 # Google API stuff
-CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secrets.json')
-
-FLOW = flow_from_clientsecrets(
-    CLIENT_SECRETS,
-    scope='https://www.googleapis.com/auth/calendar https://mail.google.com',
-    redirect_uri='http://127.0.0.1:8080/login/oauth2callback'
-    )
-
-# ----------------------------------------------------------------------------
-# If a user changes their mind, but is already logged in.
-@python_2_unicode_compatible
-def google_sign_in(request):
-    storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-    credential = storage.get()
-    if credential is None or credential.invalid == True:
-        FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
-                                                   request.user)
-        authorize_url = FLOW.step1_get_authorize_url()
-        return HttpResponseRedirect(authorize_url)
-    else:
-        http = httplib2.Http()
-        http = credential.authorize(http)
-        service = build("calendar", "v3", http=http)
-        return redirect("tasks:index")
-
-# When the user comes back from allowing or denying permissions.
-@python_2_unicode_compatible
-def auth_return(request):
-    if not xsrfutil.validate_token(settings.SECRET_KEY, bytes(request.GET['state'], 'utf-8'),
-                                request.user):
-        return  HttpResponseBadRequest()
-    try:
-        credential = FLOW.step2_exchange(request.GET)
-    except:
-        return render(request, 'login/denied_access.html')
-    else:
-        storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-        storage.put(credential)
-        return redirect("tasks:index")
+# CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), '..', 'client_secrets.json')
+#
+# FLOW = flow_from_clientsecrets(
+#     CLIENT_SECRETS,
+#     scope='https://www.googleapis.com/auth/calendar https://mail.google.com',
+#     redirect_uri='http://127.0.0.1:8080/login/oauth2callback'
+#     )
+#
+# # ----------------------------------------------------------------------------
+# # If a user changes their mind, but is already logged in.
+# @python_2_unicode_compatible
+# def google_sign_in(request):
+#     storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+#     credential = storage.get()
+#     if credential is None or credential.invalid == True:
+#         FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+#                                                    request.user)
+#         authorize_url = FLOW.step1_get_authorize_url()
+#         return HttpResponseRedirect(authorize_url)
+#     else:
+#         http = httplib2.Http()
+#         http = credential.authorize(http)
+#         service = build("calendar", "v3", http=http)
+#         return redirect("tasks:index")
+#
+# # When the user comes back from allowing or denying permissions.
+# @python_2_unicode_compatible
+# def auth_return(request):
+#     if not xsrfutil.validate_token(settings.SECRET_KEY, bytes(request.GET['state'], 'utf-8'),
+#                                 request.user):
+#         return  HttpResponseBadRequest()
+#     try:
+#         credential = FLOW.step2_exchange(request.GET)
+#     except:
+#         return render(request, 'login/denied_access.html')
+#     else:
+#         storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+#         storage.put(credential)
+#         return redirect("tasks:index")
 # ----------------------------------------------------------------------------
 
 
@@ -76,19 +76,19 @@ def sign_in(request):
             first_name = User.objects.get(username=username).first_name
 
             # Google sign_in code
-            storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-            credential = storage.get()
-            if credential is None or credential.invalid == True:
-                FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
-                                                           request.user)
-                authorize_url = FLOW.step1_get_authorize_url()
-                return HttpResponseRedirect(authorize_url)
-            else:
-                http = httplib2.Http()
-                http = credential.authorize(http)
-                service = build("calendar", "v3", http=http)
+            # storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+            # credential = storage.get()
+            # if credential is None or credential.invalid == True:
+            #     FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+            #                                                request.user)
+            #     authorize_url = FLOW.step1_get_authorize_url()
+            #     return HttpResponseRedirect(authorize_url)
+            # else:
+            #     http = httplib2.Http()
+            #     http = credential.authorize(http)
+            #     service = build("calendar", "v3", http=http)
             # Redirect to a success page
-                messages.info(request, "Welcome back, %s!" % first_name)
+            messages.info(request, "Welcome back, %s!" % first_name)
             return redirect('tasks:index')
         else:
             # Return a 'disabled account' error messages
@@ -128,17 +128,17 @@ def create_user(request):
     login(request, user)
 
     # Google sign-in code
-    storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-    credential = storage.get()
-    if credential is None or credential.invalid == True:
-        FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
-                                                   request.user)
-        authorize_url = FLOW.step1_get_authorize_url()
-        return HttpResponseRedirect(authorize_url)
-    else:
-        http = httplib2.Http()
-        http = credential.authorize(http)
-        service = build("calendar", "v3", http=http)
+    # storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+    # credential = storage.get()
+    # if credential is None or credential.invalid == True:
+    #     FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+    #                                                request.user)
+    #     authorize_url = FLOW.step1_get_authorize_url()
+    #     return HttpResponseRedirect(authorize_url)
+    # else:
+    #     http = httplib2.Http()
+    #     http = credential.authorize(http)
+    #     service = build("calendar", "v3", http=http)
 
     messages.info(request, "Welcome, %s!" % first_name)
 
