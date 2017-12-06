@@ -14,11 +14,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block title %}{% endblock %} OPAL</title>
+  <title>OPAL</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap CDN -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">#}
+  <link rel="stylesheet" href="{% static 'base/bootstrap/css/bootstrap.css' %}" type="text/css">
   <!-- Font Awesome JS -->
   <script src="https://use.fontawesome.com/9fd33f348a.js"></script>
   <!-- Ionicons -->
@@ -280,9 +281,7 @@ desired effect
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            {% block sidebar %}{% endblock %}
-            {% block content_title %}{% endblock %}
-            {% block content %}{% endblock %}
+          <div id="main"
         </div>
 
     </section>
@@ -387,8 +386,6 @@ desired effect
 <script src="{% static 'base/plugins/fullcalendar/fullcalendar.min.js' %}"></script>
 <!-- Custom Javascript -->
 <script src="{% static 'base/javascript/javascript.js' %}"></script>
-{% block scripts %}{% endblock %}
-
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

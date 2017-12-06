@@ -1,3 +1,9 @@
+var title_suffix = " | OPAL";
+
+function titleCase(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 $(function() {
     // Setup CSRF token stuff for AJAX
     function getCookie(name) {
@@ -31,38 +37,20 @@ $(function() {
         }
     });
 
+    // This is for the loading icon that comes up when switching pages
 
-    $('#sidebar').on('click', '#client-list>.item:not(.active)', function() {
-        $('.active').removeClass('active');
-        $(this).addClass('active');
 
-        client_id = $(this).val();
-        $('#main').load('client_info/', {client:client_id})
+    // This is going to be all the stuff for changing pages (one-page app)
+    $('.sidebar-menu li a').click(function(e) {
+      e.preventDefault();
+      var href = $(this).attr("href")
+      var page = $(this).attr("href").split(" ")[0].slice(1)
+      // Change the title
+      $('head title').text(titleCase(page + title_suffix))
+      // Change the page header
+      $('.content-header h1').text(titleCase(page))
+      // Load the page
+      $('.content .row').load(href)
     })
 
-    // Sort buttons
-    $('#az').click(function(event) {
-        selected_id = $(".active").val();
-        $.post("get_clients/", {sort:'az'}, function(result) {
-            $('#client-list').html(result)
-            $('#client-list>.item').each(function() {
-                console.log('here')
-                if ($(this).val() == selected_id) {
-                    $(this).addClass('active')
-                }
-            })
-        })
-    })
-
-    $('#za').click(function() {
-        selected_id = $(".active").val();
-        $.post("get_clients/", {sort:'za'}, function(result) {
-            $('#client-list').html(result)
-            $('#client-list>.item').each(function() {
-                if ($(this).val() == selected_id) {
-                    $(this).addClass('active')
-                }
-            })
-        })
-    })
 })

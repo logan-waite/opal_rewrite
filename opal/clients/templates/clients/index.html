@@ -1,11 +1,6 @@
-{% extends "base/base.html" %}
+{# {% extends "base/base.html" %}#}
+{% load staticfiles %}
 
-{% block title %}Clients | {% endblock %}
-
-{% block page_header %} Clients {% endblock %}
-
-
-{% block sidebar %}
 <div id='sidebar' class='col-sm-3'>
     <div class='box box-primary'>
         <div class="box-header">
@@ -16,7 +11,7 @@
                 </span>
             </div>
             <div class='toolbar'>
-                {# <i id='add_client' class='fa fa-plus fa-lg btn btn-success'></i>#}
+                <i id='add_client' class='fa fa-plus fa-lg btn btn-success'></i>
                 <i class='fa fa-clock-o fa-lg btn btn-info disabled pull-right'></i>
                 <i id='za' class='fa fa-sort-alpha-desc fa-lg btn btn-info pull-right'></i>
                 <i id='az' class='fa fa-sort-alpha-asc fa-lg btn btn-info pull-right'></i>
@@ -35,8 +30,7 @@
     </form>
 </div>
 
-{% endblock %}
-{% block content %}
 <div id='main' class='col-sm-8'>
 </div>
-{% endblock %}
+
+<script src="{% static 'clients/test.js' %}"></script>

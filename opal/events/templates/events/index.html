@@ -1,9 +1,6 @@
-{% extends "base/base.html" %}
+{# {% extends "base/base.html" %}#}
 {% load staticfiles %}
 
-{% block title %}Events | {% endblock %} <!-- Products? -->
-
-{% block sidebar %}
 <div class="col-sm-3">
     <div class="box box-default">
         <ul class="list-group">
@@ -18,17 +15,12 @@
         </ul>
     </div>
 </div>
-{% endblock %}
 
-{% block content %}
 <div id='main' class='col-sm-9'>
     <div class="box box-primary">
         <div id="calendar">
         </div>
     </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
-    <script src="{% static 'events/javascript/events.js' %}"></script>
-{% endblock %}
+<script src="{% static 'events/javascript/events.js' %}"></script>
